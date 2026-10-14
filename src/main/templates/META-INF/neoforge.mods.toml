@@ -9,6 +9,7 @@ version="${mod_version}"
 displayName="${mod_name}"
 displayURL="https://github.com/foliarn/music-unbound"
 authors="foliarn"
+logoFile="musicunbound.png"
 description='''
 Client-side music manager: every song can play anywhere, presets from Alpha to today, and the newest tracks backported to 1.21.1.
 '''

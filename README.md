@@ -1,3 +1,5 @@
+<img src="docs/icon.png" width="128" alt="Music Unbound icon">
+
 # Music Unbound
 
 A lightweight, **client-side** music manager for **NeoForge 1.21.1** that still feels like vanilla.
