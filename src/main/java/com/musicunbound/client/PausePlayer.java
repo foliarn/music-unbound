@@ -13,18 +13,23 @@ import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.screens.PauseScreen;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.neoforged.neoforge.client.event.ScreenEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import org.jetbrains.annotations.Nullable;
 
 /**
  * The music player in the pause menu: previous, play/pause and next buttons, the current track, and a progress bar.
- * It is a 182 x 48 block. It sits centered in the free space below the vanilla buttons when there are at least
- * 48 px free, and in the top-left corner otherwise.
+ * It is a 182 x 48 block on a vanilla popup panel with 8 px padding. The panel sits centered in the free space below
+ * the vanilla buttons when there are at least 64 px free, and the block goes in the top-left corner otherwise.
  */
 public final class PausePlayer {
     private static final int WIDTH = 182;
     private static final int HEIGHT = 48;
+    private static final int PADDING = 8;
+    private static final int PANEL_WIDTH = WIDTH + 2 * PADDING;
+    private static final int PANEL_HEIGHT = HEIGHT + 2 * PADDING;
+    private static final ResourceLocation PANEL_SPRITE = ResourceLocation.withDefaultNamespace("popup/background");
     private static final int CORNER = 8;
     private static final int BUTTON_SIZE = 20;
     private static final int BUTTON_GAP = 4;
@@ -65,6 +70,7 @@ public final class PausePlayer {
 
     public static void register() {
         NeoForge.EVENT_BUS.addListener(PausePlayer::onInitPost);
+        NeoForge.EVENT_BUS.addListener(PausePlayer::onBackgroundRendered);
         NeoForge.EVENT_BUS.addListener(PausePlayer::onRenderPre);
         NeoForge.EVENT_BUS.addListener(PausePlayer::onRenderPost);
     }
@@ -86,9 +92,10 @@ public final class PausePlayer {
         int x;
         int y;
         int free = screen.height - bottom;
-        if (free >= HEIGHT) {
+        if (free >= PANEL_HEIGHT) {
+            // The whole panel (block plus padding) fits below the vanilla buttons: center it there.
             x = (screen.width - WIDTH) / 2;
-            y = bottom + (free - HEIGHT) / 2;
+            y = bottom + (free - PANEL_HEIGHT) / 2 + PADDING;
         } else {
             x = CORNER;
             y = CORNER;
@@ -114,13 +121,21 @@ public final class PausePlayer {
         layout = new Layout(x, y, previous, toggle, next);
     }
 
+    /** Draws the panel behind the player. It is drawn after the screen's blur and dim, and before the widgets. */
+    private static void onBackgroundRendered(ScreenEvent.BackgroundRendered event) {
+        if (layout == null || !(event.getScreen() instanceof PauseScreen)) {
+            return;
+        }
+        event.getGuiGraphics().blitSprite(PANEL_SPRITE, layout.x() - PADDING, layout.y() - PADDING, PANEL_WIDTH, PANEL_HEIGHT);
+    }
+
     /** Button states are set before the screen draws, so this frame's buttons already show them. */
     private static void onRenderPre(ScreenEvent.Render.Pre event) {
         if (layout == null || !(event.getScreen() instanceof PauseScreen)) {
             return;
         }
         Button toggle = layout.toggle();
-        layout.previous().active = canGoBack();
+        layout.previous().active = Playback.hasPrevious();
         toggle.active = Playback.currentInstance() != null;
         Component label = Playback.isPaused() ? PLAY_LABEL : PAUSE_LABEL;
         if (toggle.getMessage() != label) {
@@ -161,17 +176,6 @@ public final class PausePlayer {
         if (filled > 0) {
             guiGraphics.fill(x + 1, barY + 1, x + 1 + filled, barY + BAR_HEIGHT - 1, BAR_FILL);
         }
-    }
-
-    /** True when {@link Playback#previous()} would replay something: a history entry other than the current track. */
-    private static boolean canGoBack() {
-        Track current = Playback.current();
-        for (Track track : Playback.history()) {
-            if (current == null || !track.id().equals(current.id())) {
-                return true;
-            }
-        }
-        return false;
     }
 
     private static String fit(Font font, String text) {
