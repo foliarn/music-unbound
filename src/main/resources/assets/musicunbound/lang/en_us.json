@@ -1,0 +1,33 @@
+{
+  "musicunbound.screen.settings": "Music Unbound",
+  "musicunbound.screen.tracks": "Tracks",
+  "musicunbound.options.open": "Music Unbound...",
+
+  "musicunbound.option.preset": "Preset",
+  "musicunbound.option.frequency": "Frequency",
+  "musicunbound.option.customMin": "Custom min",
+  "musicunbound.option.customMax": "Custom max",
+  "musicunbound.value.minutes": "%s min",
+
+  "musicunbound.option.netherKeepsMusic": "Nether keeps its music",
+  "musicunbound.option.endKeepsMusic": "End keeps its music",
+  "musicunbound.option.deepDarkKeepsMusic": "Deep Dark keeps its music",
+  "musicunbound.option.underwaterKeepsMusic": "Underwater keeps its music",
+
+  "musicunbound.option.showToast": "Now Playing toast",
+  "musicunbound.option.playWhilePaused": "Play while paused",
+  "musicunbound.option.showInPauseMenu": "Show track in pause menu",
+  "musicunbound.option.downloadNewTracks": "Download new tracks",
+
+  "musicunbound.option.tracks": "Tracks...",
+
+  "musicunbound.tracks.game": "Game",
+  "musicunbound.tracks.menu": "Menu",
+  "musicunbound.tracks.gameAll": "Game: all",
+  "musicunbound.tracks.gameNone": "Game: none",
+  "musicunbound.tracks.menuAll": "Menu: all",
+  "musicunbound.tracks.menuNone": "Menu: none",
+  "musicunbound.tracks.track": "%s — %s",
+  "musicunbound.tracks.notDownloaded": " (not downloaded)",
+  "musicunbound.tracks.reset": "Reset to preset"
+}

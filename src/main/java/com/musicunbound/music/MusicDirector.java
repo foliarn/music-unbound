@@ -64,7 +64,18 @@ public final class MusicDirector {
         }
     }
 
+    /** While true (a track preview is playing), no background music plays. Null music also resets vanilla's wait. */
+    private static volatile boolean suppressed;
+
+    public static void setSuppressed(boolean value) {
+        suppressed = value;
+    }
+
     public void onSelectMusic(SelectMusicEvent event) {
+        if (suppressed) {
+            event.setMusic(null);
+            return;
+        }
         // Another mod already changed the music: leave it alone.
         if (event.getMusic() != event.getOriginalMusic()) {
             return;
