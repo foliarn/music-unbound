@@ -93,8 +93,28 @@ jobs:
             echo "CHANGELOG_EOF"
           } >> "$GITHUB_OUTPUT"
 
-      - name: Publish to Modrinth
+      # Never upload the same version twice (for example after a manual upload, or a re-run).
+      # If Modrinth can't be checked, the upload is skipped rather than risking a duplicate.
+      - name: Check whether this version is already on Modrinth
+        id: modrinth
         if: vars.MODRINTH_PROJECT_ID != ''
+        env:
+          MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
+          PROJECT_ID: ${{ vars.MODRINTH_PROJECT_ID }}
+          VERSION: ${{ steps.version.outputs.mod_version }}
+        run: |
+          if ! versions=$(curl -fsS -H "Authorization: $MODRINTH_TOKEN" "https://api.modrinth.com/v2/project/$PROJECT_ID/version"); then
+            echo "upload=false" >> "$GITHUB_OUTPUT"
+            echo "::warning::Could not read the Modrinth project versions, skipping the Modrinth upload."
+          elif grep -q "\"version_number\":\"$VERSION\"" <<< "$versions"; then
+            echo "upload=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::Version $VERSION is already on Modrinth, skipping the Modrinth upload."
+          else
+            echo "upload=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Publish to Modrinth
+        if: vars.MODRINTH_PROJECT_ID != '' && steps.modrinth.outputs.upload == 'true'
         uses: Kir-Antipov/mc-publish@v3.3
         with:
           files: |
