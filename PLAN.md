@@ -1,7 +1,7 @@
 # Music Unbound — Plan (NeoForge 1.21.1, client-only)
 
 > Goal: a lightweight, client-only mod that gives full control over background music and still feels like vanilla.
-> Status: **plan complete, ready for M0.** License: MIT.
+> Status: **M0–M4 implemented and committed (0.1.0). M5 (your in-game check, Create server test, publishing) remains.** License: MIT.
 
 ---
 
