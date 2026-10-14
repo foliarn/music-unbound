@@ -1,0 +1,2751 @@
+{
+ "eras": [
+  {
+   "id": "alpha_beta",
+   "name": "Alpha & Beta (a1.2 - b1.8)",
+   "menuMusic": false,
+   "timing": {
+    "game": [
+     12000,
+     24000
+    ],
+    "creative": [
+     12000,
+     24000
+    ],
+    "nether": [
+     12000,
+     24000
+    ],
+    "end": [
+     12000,
+     24000
+    ],
+    "underwater": [
+     12000,
+     24000
+    ]
+   }
+  },
+  {
+   "id": "music_update",
+   "name": "Music Update (1.7)",
+   "menuMusic": true,
+   "timing": {
+    "game": [
+     12000,
+     24000
+    ],
+    "creative": [
+     1200,
+     3600
+    ],
+    "nether": [
+     1200,
+     3600
+    ],
+    "end": [
+     6000,
+     24000
+    ],
+    "underwater": [
+     12000,
+     24000
+    ]
+   }
+  },
+  {
+   "id": "aquatic",
+   "name": "Update Aquatic (1.13)",
+   "menuMusic": true,
+   "timing": {
+    "game": [
+     12000,
+     24000
+    ],
+    "creative": [
+     1200,
+     3600
+    ],
+    "nether": [
+     1200,
+     3600
+    ],
+    "end": [
+     6000,
+     24000
+    ],
+    "underwater": [
+     12000,
+     24000
+    ]
+   }
+  },
+  {
+   "id": "nether",
+   "name": "Nether Update (1.16)",
+   "menuMusic": true,
+   "timing": {
+    "game": [
+     12000,
+     24000
+    ],
+    "creative": [
+     12000,
+     24000
+    ],
+    "nether": [
+     12000,
+     24000
+    ],
+    "end": [
+     6000,
+     24000
+    ],
+    "underwater": [
+     12000,
+     24000
+    ]
+   }
+  },
+  {
+   "id": "caves_cliffs",
+   "name": "Caves & Cliffs (1.18)",
+   "menuMusic": true,
+   "timing": {
+    "game": [
+     12000,
+     24000
+    ],
+    "creative": [
+     12000,
+     24000
+    ],
+    "nether": [
+     12000,
+     24000
+    ],
+    "end": [
+     6000,
+     24000
+    ],
+    "underwater": [
+     12000,
+     24000
+    ]
+   }
+  },
+  {
+   "id": "wild",
+   "name": "The Wild Update (1.19)",
+   "menuMusic": true,
+   "timing": {
+    "game": [
+     12000,
+     24000
+    ],
+    "creative": [
+     12000,
+     24000
+    ],
+    "nether": [
+     12000,
+     24000
+    ],
+    "end": [
+     6000,
+     24000
+    ],
+    "underwater": [
+     12000,
+     24000
+    ]
+   }
+  },
+  {
+   "id": "trails_tales",
+   "name": "Trails & Tales (1.20)",
+   "menuMusic": true,
+   "timing": {
+    "game": [
+     12000,
+     24000
+    ],
+    "creative": [
+     12000,
+     24000
+    ],
+    "nether": [
+     12000,
+     24000
+    ],
+    "end": [
+     6000,
+     24000
+    ],
+    "underwater": [
+     12000,
+     24000
+    ]
+   }
+  },
+  {
+   "id": "tricky_trials",
+   "name": "Tricky Trials (1.21)",
+   "menuMusic": true,
+   "timing": {
+    "game": [
+     12000,
+     24000
+    ],
+    "creative": [
+     12000,
+     24000
+    ],
+    "nether": [
+     12000,
+     24000
+    ],
+    "end": [
+     6000,
+     24000
+    ],
+    "underwater": [
+     12000,
+     24000
+    ]
+   }
+  },
+  {
+   "id": "chase_the_skies",
+   "name": "Chase the Skies (1.21.6)",
+   "menuMusic": true,
+   "timing": {
+    "game": [
+     12000,
+     24000
+    ],
+    "creative": [
+     12000,
+     24000
+    ],
+    "nether": [
+     12000,
+     24000
+    ],
+    "end": [
+     6000,
+     24000
+    ],
+    "underwater": [
+     12000,
+     24000
+    ]
+   }
+  },
+  {
+   "id": "chaos_cubed",
+   "name": "Chaos Cubed (26.2)",
+   "menuMusic": true,
+   "timing": {
+    "game": [
+     12000,
+     24000
+    ],
+    "creative": [
+     12000,
+     24000
+    ],
+    "nether": [
+     12000,
+     24000
+    ],
+    "end": [
+     6000,
+     24000
+    ],
+    "underwater": [
+     12000,
+     24000
+    ]
+   }
+  }
+ ],
+ "tracks": [
+  {
+   "id": "minecraft",
+   "title": "Minecraft",
+   "artist": "C418",
+   "era": "alpha_beta",
+   "category": "overworld",
+   "file": "minecraft:music/game/minecraft",
+   "remote": false,
+   "gameDefault": true,
+   "gameAllowed": true,
+   "menuAll": false,
+   "menuEras": []
+  },
+  {
+   "id": "clark",
+   "title": "Clark",
+   "artist": "C418",
+   "era": "alpha_beta",
+   "category": "overworld",
+   "file": "minecraft:music/game/clark",
+   "remote": false,
+   "gameDefault": true,
+   "gameAllowed": true,
+   "menuAll": false,
+   "menuEras": []
+  },
+  {
+   "id": "sweden",
+   "title": "Sweden",
+   "artist": "C418",
+   "era": "alpha_beta",
+   "category": "overworld",
+   "file": "minecraft:music/game/sweden",
+   "remote": false,
+   "gameDefault": true,
+   "gameAllowed": true,
+   "menuAll": false,
+   "menuEras": []
+  },
+  {
+   "id": "dry_hands",
+   "title": "Dry Hands",
+   "artist": "C418",
+   "era": "alpha_beta",
+   "category": "overworld",
+   "file": "minecraft:music/game/dry_hands",
+   "remote": false,
+   "gameDefault": true,
+   "gameAllowed": true,
+   "menuAll": false,
+   "menuEras": []
+  },
+  {
+   "id": "wet_hands",
+   "title": "Wet Hands",
+   "artist": "C418",
+   "era": "alpha_beta",
+   "category": "overworld",
+   "file": "minecraft:music/game/wet_hands",
+   "remote": false,
+   "gameDefault": true,
+   "gameAllowed": true,
+   "menuAll": false,
+   "menuEras": []
+  },
+  {
+   "id": "mice_on_venus",
+   "title": "Mice on Venus",
+   "artist": "C418",
+   "era": "alpha_beta",
+   "category": "overworld",
+   "file": "minecraft:music/game/mice_on_venus",
+   "remote": false,
+   "gameDefault": true,
+   "gameAllowed": true,
+   "menuAll": false,
+   "menuEras": []
+  },
+  {
+   "id": "subwoofer_lullaby",
+   "title": "Subwoofer Lullaby",
+   "artist": "C418",
+   "era": "alpha_beta",
+   "category": "overworld",
+   "file": "minecraft:music/game/subwoofer_lullaby",
+   "remote": false,
+   "gameDefault": true,
+   "gameAllowed": true,
+   "menuAll": false,
+   "menuEras": []
+  },
+  {
+   "id": "living_mice",
+   "title": "Living Mice",
+   "artist": "C418",
+   "era": "alpha_beta",
+   "category": "overworld",
+   "file": "minecraft:music/game/living_mice",
+   "remote": false,
+   "gameDefault": true,
+   "gameAllowed": true,
+   "menuAll": false,
+   "menuEras": []
+  },
+  {
+   "id": "haggstrom",
+   "title": "Haggstrom",
+   "artist": "C418",
+   "era": "alpha_beta",
+   "category": "overworld",
+   "file": "minecraft:music/game/haggstrom",
+   "remote": false,
+   "gameDefault": true,
+   "gameAllowed": true,
+   "menuAll": false,
+   "menuEras": []
+  },
+  {
+   "id": "danny",
+   "title": "Danny",
+   "artist": "C418",
+   "era": "alpha_beta",
+   "category": "overworld",
+   "file": "minecraft:music/game/danny",
+   "remote": false,
+   "gameDefault": true,
+   "gameAllowed": true,
+   "menuAll": false,
+   "menuEras": []
+  },
+  {
+   "id": "key",
+   "title": "Key",
+   "artist": "C418",
+   "era": "alpha_beta",
+   "category": "overworld",
+   "file": "minecraft:music/game/key",
+   "remote": false,
+   "gameDefault": true,
+   "gameAllowed": true,
+   "menuAll": false,
+   "menuEras": []
+  },
+  {
+   "id": "oxygene",
+   "title": "Oxygène",
+   "artist": "C418",
+   "era": "alpha_beta",
+   "category": "overworld",
+   "file": "minecraft:music/game/oxygene",
+   "remote": false,
+   "gameDefault": true,
+   "gameAllowed": true,
+   "menuAll": false,
+   "menuEras": []
+  },
+  {
+   "id": "mutation",
+   "title": "Mutation",
+   "artist": "C418",
+   "era": "music_update",
+   "category": "menu",
+   "file": "minecraft:music/menu/mutation",
+   "remote": false,
+   "gameDefault": true,
+   "gameAllowed": true,
+   "menuAll": true,
+   "menuEras": [
+    "music_update",
+    "aquatic",
+    "nether",
+    "caves_cliffs",
+    "wild",
+    "trails_tales",
+    "tricky_trials",
+    "chase_the_skies",
+    "chaos_cubed"
+   ]
+  },
+  {
+   "id": "moog_city_2",
+   "title": "Moog City 2",
+   "artist": "C418",
+   "era": "music_update",
+   "category": "menu",
+   "file": "minecraft:music/menu/moog_city_2",
+   "remote": false,
+   "gameDefault": true,
+   "gameAllowed": true,
+   "menuAll": true,
+   "menuEras": [
+    "music_update",
+    "aquatic",
+    "nether",
+    "caves_cliffs",
+    "wild",
+    "trails_tales",
+    "tricky_trials",
+    "chase_the_skies",
+    "chaos_cubed"
+   ]
+  },
+  {
+   "id": "beginning_2",
+   "title": "Beginning 2",
+   "artist": "C418",
+   "era": "music_update",
+   "category": "menu",
+   "file": "minecraft:music/menu/beginning_2",
+   "remote": false,
+   "gameDefault": true,
+   "gameAllowed": true,
+   "menuAll": true,
+   "menuEras": [
+    "music_update",
+    "aquatic",
+    "nether",
+    "caves_cliffs",
+    "wild",
+    "trails_tales",
+    "tricky_trials",
+    "chase_the_skies",
+    "chaos_cubed"
+   ]
+  },
+  {
+   "id": "floating_trees",
+   "title": "Floating Trees",
+   "artist": "C418",
+   "era": "music_update",
+   "category": "menu",
+   "file": "minecraft:music/menu/floating_trees",
+   "remote": false,
+   "gameDefault": true,
+   "gameAllowed": true,
+   "menuAll": true,
+   "menuEras": [
+    "music_update",
+    "aquatic",
+    "nether",
+    "caves_cliffs",
+    "wild",
+    "trails_tales",
+    "tricky_trials",
+    "chase_the_skies",
+    "chaos_cubed"
+   ]
+  },
+  {
+   "id": "biome_fest",
+   "title": "Biome Fest",
+   "artist": "C418",
+   "era": "music_update",
+   "category": "creative",
+   "file": "minecraft:music/game/creative/biome_fest",
+   "remote": false,
+   "gameDefault": true,
+   "gameAllowed": true,
+   "menuAll": false,
+   "menuEras": []
+  },
+  {
+   "id": "blind_spots",
+   "title": "Blind Spots",
+   "artist": "C418",
+   "era": "music_update",
+   "category": "creative",
+   "file": "minecraft:music/game/creative/blind_spots",
+   "remote": false,
+   "gameDefault": true,
+   "gameAllowed": true,
+   "menuAll": false,
+   "menuEras": []
+  },
+  {
+   "id": "haunt_muskie",
+   "title": "Haunt Muskie",
+   "artist": "C418",
+   "era": "music_update",
+   "category": "creative",
+   "file": "minecraft:music/game/creative/haunt_muskie",
+   "remote": false,
+   "gameDefault": true,
+   "gameAllowed": true,
+   "menuAll": false,
+   "menuEras": []
+  },
+  {
+   "id": "aria_math",
+   "title": "Aria Math",
+   "artist": "C418",
+   "era": "music_update",
+   "category": "creative",
+   "file": "minecraft:music/game/creative/aria_math",
+   "remote": false,
+   "gameDefault": true,
+   "gameAllowed": true,
+   "menuAll": false,
+   "menuEras": []
+  },
+  {
+   "id": "dreiton",
+   "title": "Dreiton",
+   "artist": "C418",
+   "era": "music_update",
+   "category": "creative",
+   "file": "minecraft:music/game/creative/dreiton",
+   "remote": false,
+   "gameDefault": true,
+   "gameAllowed": true,
+   "menuAll": false,
+   "menuEras": []
+  },
+  {
+   "id": "taswell",
+   "title": "Taswell",
+   "artist": "C418",
+   "era": "music_update",
+   "category": "creative",
+   "file": "minecraft:music/game/creative/taswell",
+   "remote": false,
+   "gameDefault": true,
+   "gameAllowed": true,
+   "menuAll": false,
+   "menuEras": []
+  },
+  {
+   "id": "concrete_halls",
+   "title": "Concrete Halls",
+   "artist": "C418",
+   "era": "music_update",
+   "category": "nether",
+   "file": "minecraft:music/game/nether/concrete_halls",
+   "remote": false,
+   "gameDefault": false,
+   "gameAllowed": true,
+   "menuAll": false,
+   "menuEras": []
+  },
+  {
+   "id": "dead_voxel",
+   "title": "Dead Voxel",
+   "artist": "C418",
+   "era": "music_update",
+   "category": "nether",
+   "file": "minecraft:music/game/nether/dead_voxel",
+   "remote": false,
+   "gameDefault": false,
+   "gameAllowed": true,
+   "menuAll": false,
+   "menuEras": []
+  },
+  {
+   "id": "warmth",
+   "title": "Warmth",
+   "artist": "C418",
+   "era": "music_update",
+   "category": "nether",
+   "file": "minecraft:music/game/nether/warmth",
+   "remote": false,
+   "gameDefault": false,
+   "gameAllowed": true,
+   "menuAll": false,
+   "menuEras": []
+  },
+  {
+   "id": "ballad_of_the_cats",
+   "title": "Ballad of the Cats",
+   "artist": "C418",
+   "era": "music_update",
+   "category": "nether",
+   "file": "minecraft:music/game/nether/ballad_of_the_cats",
+   "remote": false,
+   "gameDefault": false,
+   "gameAllowed": true,
+   "menuAll": false,
+   "menuEras": []
+  },
+  {
+   "id": "the_end",
+   "title": "The End",
+   "artist": "C418",
+   "era": "music_update",
+   "category": "end",
+   "file": "minecraft:music/game/end/the_end",
+   "remote": false,
+   "gameDefault": false,
+   "gameAllowed": false,
+   "menuAll": false,
+   "menuEras": []
+  },
+  {
+   "id": "boss",
+   "title": "Boss",
+   "artist": "C418",
+   "era": "music_update",
+   "category": "boss",
+   "file": "minecraft:music/game/end/boss",
+   "remote": false,
+   "gameDefault": true,
+   "gameAllowed": true,
+   "menuAll": false,
+   "menuEras": []
+  },
+  {
+   "id": "alpha",
+   "title": "Alpha",
+   "artist": "C418",
+   "era": "music_update",
+   "category": "credits",
+   "file": "minecraft:music/game/end/alpha",
+   "remote": false,
+   "gameDefault": true,
+   "gameAllowed": true,
+   "menuAll": false,
+   "menuEras": []
+  },
+  {
+   "id": "axolotl",
+   "title": "Axolotl",
+   "artist": "C418",
+   "era": "aquatic",
+   "category": "underwater",
+   "file": "minecraft:music/game/water/axolotl",
+   "remote": false,
+   "gameDefault": true,
+   "gameAllowed": true,
+   "menuAll": false,
+   "menuEras": []
+  },
+  {
+   "id": "dragon_fish",
+   "title": "Dragon Fish",
+   "artist": "C418",
+   "era": "aquatic",
+   "category": "underwater",
+   "file": "minecraft:music/game/water/dragon_fish",
+   "remote": false,
+   "gameDefault": true,
+   "gameAllowed": true,
+   "menuAll": false,
+   "menuEras": []
+  },
+  {
+   "id": "shuniji",
+   "title": "Shuniji",
+   "artist": "C418",
+   "era": "aquatic",
+   "category": "underwater",
+   "file": "minecraft:music/game/water/shuniji",
+   "remote": false,
+   "gameDefault": true,
+   "gameAllowed": true,
+   "menuAll": false,
+   "menuEras": []
+  },
+  {
+   "id": "rubedo",
+   "title": "Rubedo",
+   "artist": "Lena Raine",
+   "era": "nether",
+   "category": "nether",
+   "file": "minecraft:music/game/nether/nether_wastes/rubedo",
+   "remote": false,
+   "gameDefault": false,
+   "gameAllowed": true,
+   "menuAll": false,
+   "menuEras": []
+  },
+  {
+   "id": "chrysopoeia",
+   "title": "Chrysopoeia",
+   "artist": "Lena Raine",
+   "era": "nether",
+   "category": "nether",
+   "file": "minecraft:music/game/nether/crimson_forest/chrysopoeia",
+   "remote": false,
+   "gameDefault": false,
+   "gameAllowed": true,
+   "menuAll": false,
+   "menuEras": []
+  },
+  {
+   "id": "so_below",
+   "title": "So Below",
+   "artist": "Lena Raine",
+   "era": "nether",
+   "category": "nether",
+   "file": "minecraft:music/game/nether/soulsand_valley/so_below",
+   "remote": false,
+   "gameDefault": false,
+   "gameAllowed": true,
+   "menuAll": false,
+   "menuEras": []
+  },
+  {
+   "id": "stand_tall",
+   "title": "Stand Tall",
+   "artist": "Lena Raine",
+   "era": "caves_cliffs",
+   "category": "overworld",
+   "file": "minecraft:music/game/stand_tall",
+   "remote": false,
+   "gameDefault": true,
+   "gameAllowed": true,
+   "menuAll": false,
+   "menuEras": [
+    "caves_cliffs"
+   ]
+  },
+  {
+   "id": "left_to_bloom",
+   "title": "Left to Bloom",
+   "artist": "Lena Raine",
+   "era": "caves_cliffs",
+   "category": "overworld",
+   "file": "minecraft:music/game/left_to_bloom",
+   "remote": false,
+   "gameDefault": true,
+   "gameAllowed": true,
+   "menuAll": false,
+   "menuEras": [
+    "caves_cliffs"
+   ]
+  },
+  {
+   "id": "wending",
+   "title": "Wending",
+   "artist": "Lena Raine",
+   "era": "caves_cliffs",
+   "category": "overworld",
+   "file": "minecraft:music/game/wending",
+   "remote": false,
+   "gameDefault": true,
+   "gameAllowed": true,
+   "menuAll": false,
+   "menuEras": [
+    "caves_cliffs"
+   ]
+  },
+  {
+   "id": "infinite_amethyst",
+   "title": "Infinite Amethyst",
+   "artist": "Lena Raine",
+   "era": "caves_cliffs",
+   "category": "overworld",
+   "file": "minecraft:music/game/infinite_amethyst",
+   "remote": false,
+   "gameDefault": true,
+   "gameAllowed": true,
+   "menuAll": false,
+   "menuEras": [
+    "caves_cliffs"
+   ]
+  },
+  {
+   "id": "one_more_day",
+   "title": "One More Day",
+   "artist": "Lena Raine",
+   "era": "caves_cliffs",
+   "category": "overworld",
+   "file": "minecraft:music/game/one_more_day",
+   "remote": false,
+   "gameDefault": true,
+   "gameAllowed": true,
+   "menuAll": false,
+   "menuEras": [
+    "caves_cliffs"
+   ]
+  },
+  {
+   "id": "floating_dream",
+   "title": "Floating Dream",
+   "artist": "Kumi Tanioka",
+   "era": "caves_cliffs",
+   "category": "overworld",
+   "file": "minecraft:music/game/floating_dream",
+   "remote": false,
+   "gameDefault": true,
+   "gameAllowed": true,
+   "menuAll": false,
+   "menuEras": [
+    "caves_cliffs"
+   ]
+  },
+  {
+   "id": "comforting_memories",
+   "title": "Comforting Memories",
+   "artist": "Kumi Tanioka",
+   "era": "caves_cliffs",
+   "category": "overworld",
+   "file": "minecraft:music/game/comforting_memories",
+   "remote": false,
+   "gameDefault": true,
+   "gameAllowed": true,
+   "menuAll": false,
+   "menuEras": [
+    "caves_cliffs"
+   ]
+  },
+  {
+   "id": "an_ordinary_day",
+   "title": "An Ordinary Day",
+   "artist": "Kumi Tanioka",
+   "era": "caves_cliffs",
+   "category": "overworld",
+   "file": "minecraft:music/game/an_ordinary_day",
+   "remote": false,
+   "gameDefault": true,
+   "gameAllowed": true,
+   "menuAll": false,
+   "menuEras": [
+    "caves_cliffs"
+   ]
+  },
+  {
+   "id": "ancestry",
+   "title": "Ancestry",
+   "artist": "Lena Raine",
+   "era": "wild",
+   "category": "deep_dark",
+   "file": "minecraft:music/game/ancestry",
+   "remote": false,
+   "gameDefault": false,
+   "gameAllowed": true,
+   "menuAll": false,
+   "menuEras": []
+  },
+  {
+   "id": "aerie",
+   "title": "Aerie",
+   "artist": "Lena Raine",
+   "era": "wild",
+   "category": "overworld",
+   "file": "minecraft:music/game/swamp/aerie",
+   "remote": false,
+   "gameDefault": true,
+   "gameAllowed": true,
+   "menuAll": false,
+   "menuEras": [
+    "wild"
+   ]
+  },
+  {
+   "id": "firebugs",
+   "title": "Firebugs",
+   "artist": "Lena Raine",
+   "era": "wild",
+   "category": "overworld",
+   "file": "minecraft:music/game/swamp/firebugs",
+   "remote": false,
+   "gameDefault": true,
+   "gameAllowed": true,
+   "menuAll": false,
+   "menuEras": [
+    "wild"
+   ]
+  },
+  {
+   "id": "labyrinthine",
+   "title": "Labyrinthine",
+   "artist": "Lena Raine",
+   "era": "wild",
+   "category": "overworld",
+   "file": "minecraft:music/game/swamp/labyrinthine",
+   "remote": false,
+   "gameDefault": true,
+   "gameAllowed": true,
+   "menuAll": false,
+   "menuEras": [
+    "wild"
+   ]
+  },
+  {
+   "id": "echo_in_the_wind",
+   "title": "Echo in the Wind",
+   "artist": "Aaron Cherof",
+   "era": "trails_tales",
+   "category": "overworld",
+   "file": "minecraft:music/game/echo_in_the_wind",
+   "remote": false,
+   "gameDefault": true,
+   "gameAllowed": true,
+   "menuAll": false,
+   "menuEras": [
+    "trails_tales"
+   ]
+  },
+  {
+   "id": "a_familiar_room",
+   "title": "A Familiar Room",
+   "artist": "Aaron Cherof",
+   "era": "trails_tales",
+   "category": "overworld",
+   "file": "minecraft:music/game/a_familiar_room",
+   "remote": false,
+   "gameDefault": true,
+   "gameAllowed": true,
+   "menuAll": false,
+   "menuEras": [
+    "trails_tales"
+   ]
+  },
+  {
+   "id": "bromeliad",
+   "title": "Bromeliad",
+   "artist": "Aaron Cherof",
+   "era": "trails_tales",
+   "category": "overworld",
+   "file": "minecraft:music/game/bromeliad",
+   "remote": false,
+   "gameDefault": true,
+   "gameAllowed": true,
+   "menuAll": false,
+   "menuEras": [
+    "trails_tales"
+   ]
+  },
+  {
+   "id": "crescent_dunes",
+   "title": "Crescent Dunes",
+   "artist": "Aaron Cherof",
+   "era": "trails_tales",
+   "category": "overworld",
+   "file": "minecraft:music/game/crescent_dunes",
+   "remote": false,
+   "gameDefault": true,
+   "gameAllowed": true,
+   "menuAll": false,
+   "menuEras": [
+    "trails_tales"
+   ]
+  },
+  {
+   "id": "featherfall",
+   "title": "Featherfall",
+   "artist": "Aaron Cherof",
+   "era": "tricky_trials",
+   "category": "overworld",
+   "file": "minecraft:music/game/featherfall",
+   "remote": false,
+   "gameDefault": true,
+   "gameAllowed": true,
+   "menuAll": true,
+   "menuEras": [
+    "tricky_trials"
+   ]
+  },
+  {
+   "id": "watcher",
+   "title": "Watcher",
+   "artist": "Aaron Cherof",
+   "era": "tricky_trials",
+   "category": "overworld",
+   "file": "minecraft:music/game/watcher",
+   "remote": false,
+   "gameDefault": true,
+   "gameAllowed": true,
+   "menuAll": true,
+   "menuEras": [
+    "tricky_trials"
+   ]
+  },
+  {
+   "id": "puzzlebox",
+   "title": "Puzzlebox",
+   "artist": "Aaron Cherof",
+   "era": "tricky_trials",
+   "category": "overworld",
+   "file": "minecraft:music/game/puzzlebox",
+   "remote": false,
+   "gameDefault": true,
+   "gameAllowed": true,
+   "menuAll": true,
+   "menuEras": [
+    "tricky_trials"
+   ]
+  },
+  {
+   "id": "komorebi",
+   "title": "komorebi",
+   "artist": "Kumi Tanioka",
+   "era": "tricky_trials",
+   "category": "overworld",
+   "file": "minecraft:music/game/komorebi",
+   "remote": false,
+   "gameDefault": true,
+   "gameAllowed": true,
+   "menuAll": true,
+   "menuEras": [
+    "tricky_trials"
+   ]
+  },
+  {
+   "id": "pokopoko",
+   "title": "pokopoko",
+   "artist": "Kumi Tanioka",
+   "era": "tricky_trials",
+   "category": "overworld",
+   "file": "minecraft:music/game/pokopoko",
+   "remote": false,
+   "gameDefault": true,
+   "gameAllowed": true,
+   "menuAll": true,
+   "menuEras": [
+    "tricky_trials"
+   ]
+  },
+  {
+   "id": "yakusoku",
+   "title": "yakusoku",
+   "artist": "Kumi Tanioka",
+   "era": "tricky_trials",
+   "category": "overworld",
+   "file": "minecraft:music/game/yakusoku",
+   "remote": false,
+   "gameDefault": true,
+   "gameAllowed": true,
+   "menuAll": true,
+   "menuEras": [
+    "tricky_trials"
+   ]
+  },
+  {
+   "id": "deeper",
+   "title": "Deeper",
+   "artist": "Lena Raine",
+   "era": "tricky_trials",
+   "category": "overworld",
+   "file": "minecraft:music/game/deeper",
+   "remote": false,
+   "gameDefault": true,
+   "gameAllowed": true,
+   "menuAll": true,
+   "menuEras": [
+    "tricky_trials"
+   ]
+  },
+  {
+   "id": "eld_unknown",
+   "title": "Eld Unknown",
+   "artist": "Lena Raine",
+   "era": "tricky_trials",
+   "category": "overworld",
+   "file": "minecraft:music/game/eld_unknown",
+   "remote": false,
+   "gameDefault": true,
+   "gameAllowed": true,
+   "menuAll": true,
+   "menuEras": [
+    "tricky_trials"
+   ]
+  },
+  {
+   "id": "endless",
+   "title": "Endless",
+   "artist": "Lena Raine",
+   "era": "tricky_trials",
+   "category": "overworld",
+   "file": "minecraft:music/game/endless",
+   "remote": false,
+   "gameDefault": true,
+   "gameAllowed": true,
+   "menuAll": true,
+   "menuEras": [
+    "tricky_trials"
+   ]
+  },
+  {
+   "id": "below_and_above",
+   "title": "Below and Above",
+   "artist": "Amos Roddy",
+   "era": "chase_the_skies",
+   "category": "overworld",
+   "file": "minecraft:music/game/below_and_above",
+   "remote": true,
+   "gameDefault": true,
+   "gameAllowed": true,
+   "menuAll": false,
+   "menuEras": [
+    "chase_the_skies"
+   ]
+  },
+  {
+   "id": "broken_clocks",
+   "title": "Broken Clocks",
+   "artist": "Amos Roddy",
+   "era": "chase_the_skies",
+   "category": "overworld",
+   "file": "minecraft:music/game/broken_clocks",
+   "remote": true,
+   "gameDefault": true,
+   "gameAllowed": true,
+   "menuAll": false,
+   "menuEras": [
+    "chase_the_skies"
+   ]
+  },
+  {
+   "id": "fireflies",
+   "title": "Fireflies",
+   "artist": "Amos Roddy",
+   "era": "chase_the_skies",
+   "category": "overworld",
+   "file": "minecraft:music/game/fireflies",
+   "remote": true,
+   "gameDefault": true,
+   "gameAllowed": true,
+   "menuAll": false,
+   "menuEras": [
+    "chase_the_skies"
+   ]
+  },
+  {
+   "id": "lilypad",
+   "title": "Lilypad",
+   "artist": "Amos Roddy",
+   "era": "chase_the_skies",
+   "category": "overworld",
+   "file": "minecraft:music/game/lilypad",
+   "remote": true,
+   "gameDefault": true,
+   "gameAllowed": true,
+   "menuAll": false,
+   "menuEras": [
+    "chase_the_skies"
+   ]
+  },
+  {
+   "id": "os_piano",
+   "title": "O's Piano",
+   "artist": "Amos Roddy",
+   "era": "chase_the_skies",
+   "category": "overworld",
+   "file": "minecraft:music/game/os_piano",
+   "remote": true,
+   "gameDefault": true,
+   "gameAllowed": true,
+   "menuAll": false,
+   "menuEras": [
+    "chase_the_skies"
+   ]
+  },
+  {
+   "id": "ebb",
+   "title": "Ebb",
+   "artist": "fingerspit",
+   "era": "chaos_cubed",
+   "category": "overworld",
+   "file": "minecraft:music/game/ebb",
+   "remote": true,
+   "gameDefault": true,
+   "gameAllowed": true,
+   "menuAll": true,
+   "menuEras": [
+    "chaos_cubed"
+   ]
+  },
+  {
+   "id": "home",
+   "title": "Home",
+   "artist": "fingerspit",
+   "era": "chaos_cubed",
+   "category": "overworld",
+   "file": "minecraft:music/game/home",
+   "remote": true,
+   "gameDefault": true,
+   "gameAllowed": true,
+   "menuAll": true,
+   "menuEras": [
+    "chaos_cubed"
+   ]
+  },
+  {
+   "id": "memories",
+   "title": "Memories",
+   "artist": "fingerspit",
+   "era": "chaos_cubed",
+   "category": "overworld",
+   "file": "minecraft:music/game/memories",
+   "remote": true,
+   "gameDefault": true,
+   "gameAllowed": true,
+   "menuAll": true,
+   "menuEras": [
+    "chaos_cubed"
+   ]
+  },
+  {
+   "id": "nightly",
+   "title": "Nightly",
+   "artist": "fingerspit",
+   "era": "chaos_cubed",
+   "category": "overworld",
+   "file": "minecraft:music/game/nightly",
+   "remote": true,
+   "gameDefault": true,
+   "gameAllowed": true,
+   "menuAll": true,
+   "menuEras": [
+    "chaos_cubed"
+   ]
+  },
+  {
+   "id": "shores",
+   "title": "Shores",
+   "artist": "fingerspit",
+   "era": "chaos_cubed",
+   "category": "overworld",
+   "file": "minecraft:music/game/shores",
+   "remote": true,
+   "gameDefault": true,
+   "gameAllowed": true,
+   "menuAll": true,
+   "menuEras": [
+    "chaos_cubed"
+   ]
+  }
+ ],
+ "vanillaLatest": {
+  "minecraft:music.creative": [
+   {
+    "id": "a_familiar_room",
+    "weight": 1
+   },
+   {
+    "id": "below_and_above",
+    "weight": 1
+   },
+   {
+    "id": "broken_clocks",
+    "weight": 1
+   },
+   {
+    "id": "clark",
+    "weight": 1
+   },
+   {
+    "id": "comforting_memories",
+    "weight": 1
+   },
+   {
+    "id": "danny",
+    "weight": 1
+   },
+   {
+    "id": "dry_hands",
+    "weight": 1
+   },
+   {
+    "id": "ebb",
+    "weight": 2
+   },
+   {
+    "id": "featherfall",
+    "weight": 1
+   },
+   {
+    "id": "fireflies",
+    "weight": 1
+   },
+   {
+    "id": "floating_dream",
+    "weight": 1
+   },
+   {
+    "id": "haggstrom",
+    "weight": 1
+   },
+   {
+    "id": "home",
+    "weight": 2
+   },
+   {
+    "id": "key",
+    "weight": 1
+   },
+   {
+    "id": "komorebi",
+    "weight": 1
+   },
+   {
+    "id": "left_to_bloom",
+    "weight": 1
+   },
+   {
+    "id": "lilypad",
+    "weight": 1
+   },
+   {
+    "id": "living_mice",
+    "weight": 1
+   },
+   {
+    "id": "memories",
+    "weight": 2
+   },
+   {
+    "id": "mice_on_venus",
+    "weight": 1
+   },
+   {
+    "id": "minecraft",
+    "weight": 1
+   },
+   {
+    "id": "nightly",
+    "weight": 2
+   },
+   {
+    "id": "one_more_day",
+    "weight": 1
+   },
+   {
+    "id": "os_piano",
+    "weight": 1
+   },
+   {
+    "id": "oxygene",
+    "weight": 1
+   },
+   {
+    "id": "puzzlebox",
+    "weight": 1
+   },
+   {
+    "id": "shores",
+    "weight": 2
+   },
+   {
+    "id": "subwoofer_lullaby",
+    "weight": 1
+   },
+   {
+    "id": "sweden",
+    "weight": 1
+   },
+   {
+    "id": "watcher",
+    "weight": 1
+   },
+   {
+    "id": "wet_hands",
+    "weight": 1
+   },
+   {
+    "id": "yakusoku",
+    "weight": 1
+   },
+   {
+    "id": "aria_math",
+    "weight": 1
+   },
+   {
+    "id": "biome_fest",
+    "weight": 1
+   },
+   {
+    "id": "blind_spots",
+    "weight": 1
+   },
+   {
+    "id": "dreiton",
+    "weight": 1
+   },
+   {
+    "id": "haunt_muskie",
+    "weight": 1
+   },
+   {
+    "id": "taswell",
+    "weight": 1
+   }
+  ],
+  "minecraft:music.credits": [
+   {
+    "id": "alpha",
+    "weight": 1
+   }
+  ],
+  "minecraft:music.dragon": [
+   {
+    "id": "boss",
+    "weight": 1
+   }
+  ],
+  "minecraft:music.end": [
+   {
+    "id": "the_end",
+    "weight": 1
+   }
+  ],
+  "minecraft:music.game": [
+   {
+    "id": "a_familiar_room",
+    "weight": 1
+   },
+   {
+    "id": "below_and_above",
+    "weight": 1
+   },
+   {
+    "id": "broken_clocks",
+    "weight": 1
+   },
+   {
+    "id": "clark",
+    "weight": 1
+   },
+   {
+    "id": "comforting_memories",
+    "weight": 1
+   },
+   {
+    "id": "danny",
+    "weight": 1
+   },
+   {
+    "id": "dry_hands",
+    "weight": 1
+   },
+   {
+    "id": "ebb",
+    "weight": 2
+   },
+   {
+    "id": "featherfall",
+    "weight": 1
+   },
+   {
+    "id": "fireflies",
+    "weight": 1
+   },
+   {
+    "id": "floating_dream",
+    "weight": 1
+   },
+   {
+    "id": "haggstrom",
+    "weight": 1
+   },
+   {
+    "id": "home",
+    "weight": 2
+   },
+   {
+    "id": "key",
+    "weight": 1
+   },
+   {
+    "id": "komorebi",
+    "weight": 1
+   },
+   {
+    "id": "left_to_bloom",
+    "weight": 1
+   },
+   {
+    "id": "lilypad",
+    "weight": 1
+   },
+   {
+    "id": "living_mice",
+    "weight": 1
+   },
+   {
+    "id": "memories",
+    "weight": 2
+   },
+   {
+    "id": "mice_on_venus",
+    "weight": 1
+   },
+   {
+    "id": "minecraft",
+    "weight": 1
+   },
+   {
+    "id": "nightly",
+    "weight": 2
+   },
+   {
+    "id": "one_more_day",
+    "weight": 1
+   },
+   {
+    "id": "os_piano",
+    "weight": 1
+   },
+   {
+    "id": "oxygene",
+    "weight": 1
+   },
+   {
+    "id": "puzzlebox",
+    "weight": 1
+   },
+   {
+    "id": "shores",
+    "weight": 2
+   },
+   {
+    "id": "subwoofer_lullaby",
+    "weight": 1
+   },
+   {
+    "id": "sweden",
+    "weight": 1
+   },
+   {
+    "id": "watcher",
+    "weight": 1
+   },
+   {
+    "id": "wet_hands",
+    "weight": 1
+   },
+   {
+    "id": "yakusoku",
+    "weight": 1
+   }
+  ],
+  "minecraft:music.menu": [
+   {
+    "id": "ebb",
+    "weight": 2
+   },
+   {
+    "id": "home",
+    "weight": 2
+   },
+   {
+    "id": "memories",
+    "weight": 2
+   },
+   {
+    "id": "nightly",
+    "weight": 2
+   },
+   {
+    "id": "shores",
+    "weight": 2
+   },
+   {
+    "id": "beginning_2",
+    "weight": 1
+   },
+   {
+    "id": "floating_trees",
+    "weight": 1
+   },
+   {
+    "id": "moog_city_2",
+    "weight": 1
+   },
+   {
+    "id": "mutation",
+    "weight": 1
+   }
+  ],
+  "minecraft:music.nether.basalt_deltas": [
+   {
+    "id": "ballad_of_the_cats",
+    "weight": 1
+   },
+   {
+    "id": "concrete_halls",
+    "weight": 1
+   },
+   {
+    "id": "dead_voxel",
+    "weight": 1
+   },
+   {
+    "id": "so_below",
+    "weight": 7
+   },
+   {
+    "id": "warmth",
+    "weight": 1
+   }
+  ],
+  "minecraft:music.nether.crimson_forest": [
+   {
+    "id": "ballad_of_the_cats",
+    "weight": 1
+   },
+   {
+    "id": "concrete_halls",
+    "weight": 1
+   },
+   {
+    "id": "chrysopoeia",
+    "weight": 7
+   },
+   {
+    "id": "dead_voxel",
+    "weight": 1
+   },
+   {
+    "id": "warmth",
+    "weight": 1
+   }
+  ],
+  "minecraft:music.nether.nether_wastes": [
+   {
+    "id": "ballad_of_the_cats",
+    "weight": 1
+   },
+   {
+    "id": "concrete_halls",
+    "weight": 1
+   },
+   {
+    "id": "dead_voxel",
+    "weight": 1
+   },
+   {
+    "id": "rubedo",
+    "weight": 6
+   },
+   {
+    "id": "warmth",
+    "weight": 1
+   }
+  ],
+  "minecraft:music.nether.soul_sand_valley": [
+   {
+    "id": "ballad_of_the_cats",
+    "weight": 1
+   },
+   {
+    "id": "concrete_halls",
+    "weight": 1
+   },
+   {
+    "id": "dead_voxel",
+    "weight": 1
+   },
+   {
+    "id": "so_below",
+    "weight": 7
+   },
+   {
+    "id": "warmth",
+    "weight": 1
+   }
+  ],
+  "minecraft:music.nether.warped_forest": [],
+  "minecraft:music.overworld.badlands": [
+   {
+    "id": "crescent_dunes",
+    "weight": 1
+   },
+   {
+    "id": "danny",
+    "weight": 1
+   },
+   {
+    "id": "dry_hands",
+    "weight": 1
+   },
+   {
+    "id": "echo_in_the_wind",
+    "weight": 1
+   },
+   {
+    "id": "featherfall",
+    "weight": 1
+   },
+   {
+    "id": "haggstrom",
+    "weight": 1
+   },
+   {
+    "id": "key",
+    "weight": 1
+   },
+   {
+    "id": "living_mice",
+    "weight": 1
+   },
+   {
+    "id": "memories",
+    "weight": 2
+   },
+   {
+    "id": "mice_on_venus",
+    "weight": 1
+   },
+   {
+    "id": "one_more_day",
+    "weight": 1
+   },
+   {
+    "id": "oxygene",
+    "weight": 1
+   },
+   {
+    "id": "subwoofer_lullaby",
+    "weight": 1
+   },
+   {
+    "id": "wet_hands",
+    "weight": 1
+   }
+  ],
+  "minecraft:music.overworld.bamboo_jungle": [
+   {
+    "id": "bromeliad",
+    "weight": 1
+   },
+   {
+    "id": "danny",
+    "weight": 1
+   },
+   {
+    "id": "dry_hands",
+    "weight": 1
+   },
+   {
+    "id": "haggstrom",
+    "weight": 1
+   },
+   {
+    "id": "home",
+    "weight": 2
+   },
+   {
+    "id": "key",
+    "weight": 1
+   },
+   {
+    "id": "left_to_bloom",
+    "weight": 1
+   },
+   {
+    "id": "living_mice",
+    "weight": 1
+   },
+   {
+    "id": "mice_on_venus",
+    "weight": 1
+   },
+   {
+    "id": "oxygene",
+    "weight": 1
+   },
+   {
+    "id": "subwoofer_lullaby",
+    "weight": 1
+   },
+   {
+    "id": "wet_hands",
+    "weight": 1
+   }
+  ],
+  "minecraft:music.overworld.cherry_grove": [
+   {
+    "id": "below_and_above",
+    "weight": 1
+   },
+   {
+    "id": "bromeliad",
+    "weight": 1
+   },
+   {
+    "id": "clark",
+    "weight": 1
+   },
+   {
+    "id": "echo_in_the_wind",
+    "weight": 1
+   },
+   {
+    "id": "featherfall",
+    "weight": 1
+   },
+   {
+    "id": "home",
+    "weight": 2
+   },
+   {
+    "id": "left_to_bloom",
+    "weight": 1
+   },
+   {
+    "id": "memories",
+    "weight": 2
+   },
+   {
+    "id": "minecraft",
+    "weight": 1
+   },
+   {
+    "id": "nightly",
+    "weight": 2
+   },
+   {
+    "id": "sweden",
+    "weight": 1
+   }
+  ],
+  "minecraft:music.overworld.deep_dark": [
+   {
+    "id": "ancestry",
+    "weight": 1
+   },
+   {
+    "id": "deeper",
+    "weight": 1
+   }
+  ],
+  "minecraft:music.overworld.desert": [
+   {
+    "id": "crescent_dunes",
+    "weight": 1
+   },
+   {
+    "id": "danny",
+    "weight": 1
+   },
+   {
+    "id": "fireflies",
+    "weight": 1
+   },
+   {
+    "id": "haggstrom",
+    "weight": 1
+   },
+   {
+    "id": "key",
+    "weight": 1
+   },
+   {
+    "id": "living_mice",
+    "weight": 1
+   },
+   {
+    "id": "memories",
+    "weight": 2
+   },
+   {
+    "id": "one_more_day",
+    "weight": 1
+   },
+   {
+    "id": "oxygene",
+    "weight": 1
+   },
+   {
+    "id": "subwoofer_lullaby",
+    "weight": 1
+   }
+  ],
+  "minecraft:music.overworld.dripstone_caves": [
+   {
+    "id": "an_ordinary_day",
+    "weight": 1
+   },
+   {
+    "id": "danny",
+    "weight": 1
+   },
+   {
+    "id": "deeper",
+    "weight": 1
+   },
+   {
+    "id": "ebb",
+    "weight": 2
+   },
+   {
+    "id": "eld_unknown",
+    "weight": 1
+   },
+   {
+    "id": "endless",
+    "weight": 1
+   },
+   {
+    "id": "infinite_amethyst",
+    "weight": 1
+   },
+   {
+    "id": "key",
+    "weight": 1
+   },
+   {
+    "id": "nightly",
+    "weight": 2
+   },
+   {
+    "id": "oxygene",
+    "weight": 1
+   },
+   {
+    "id": "pokopoko",
+    "weight": 1
+   },
+   {
+    "id": "shores",
+    "weight": 2
+   },
+   {
+    "id": "subwoofer_lullaby",
+    "weight": 1
+   },
+   {
+    "id": "wending",
+    "weight": 1
+   }
+  ],
+  "minecraft:music.overworld.flower_forest": [
+   {
+    "id": "bromeliad",
+    "weight": 1
+   },
+   {
+    "id": "danny",
+    "weight": 1
+   },
+   {
+    "id": "echo_in_the_wind",
+    "weight": 1
+   },
+   {
+    "id": "featherfall",
+    "weight": 1
+   },
+   {
+    "id": "haggstrom",
+    "weight": 1
+   },
+   {
+    "id": "key",
+    "weight": 1
+   },
+   {
+    "id": "left_to_bloom",
+    "weight": 1
+   },
+   {
+    "id": "living_mice",
+    "weight": 1
+   },
+   {
+    "id": "memories",
+    "weight": 2
+   },
+   {
+    "id": "oxygene",
+    "weight": 1
+   },
+   {
+    "id": "shores",
+    "weight": 2
+   },
+   {
+    "id": "subwoofer_lullaby",
+    "weight": 1
+   }
+  ],
+  "minecraft:music.overworld.forest": [
+   {
+    "id": "broken_clocks",
+    "weight": 1
+   },
+   {
+    "id": "bromeliad",
+    "weight": 1
+   },
+   {
+    "id": "clark",
+    "weight": 1
+   },
+   {
+    "id": "comforting_memories",
+    "weight": 1
+   },
+   {
+    "id": "danny",
+    "weight": 1
+   },
+   {
+    "id": "dry_hands",
+    "weight": 1
+   },
+   {
+    "id": "floating_dream",
+    "weight": 1
+   },
+   {
+    "id": "haggstrom",
+    "weight": 1
+   },
+   {
+    "id": "key",
+    "weight": 1
+   },
+   {
+    "id": "left_to_bloom",
+    "weight": 1
+   },
+   {
+    "id": "living_mice",
+    "weight": 1
+   },
+   {
+    "id": "memories",
+    "weight": 2
+   },
+   {
+    "id": "mice_on_venus",
+    "weight": 1
+   },
+   {
+    "id": "minecraft",
+    "weight": 1
+   },
+   {
+    "id": "one_more_day",
+    "weight": 1
+   },
+   {
+    "id": "oxygene",
+    "weight": 1
+   },
+   {
+    "id": "shores",
+    "weight": 2
+   },
+   {
+    "id": "subwoofer_lullaby",
+    "weight": 1
+   },
+   {
+    "id": "aerie",
+    "weight": 1
+   },
+   {
+    "id": "firebugs",
+    "weight": 1
+   },
+   {
+    "id": "labyrinthine",
+    "weight": 1
+   },
+   {
+    "id": "sweden",
+    "weight": 1
+   },
+   {
+    "id": "wet_hands",
+    "weight": 1
+   }
+  ],
+  "minecraft:music.overworld.frozen_peaks": [
+   {
+    "id": "danny",
+    "weight": 1
+   },
+   {
+    "id": "dry_hands",
+    "weight": 1
+   },
+   {
+    "id": "ebb",
+    "weight": 2
+   },
+   {
+    "id": "haggstrom",
+    "weight": 1
+   },
+   {
+    "id": "home",
+    "weight": 2
+   },
+   {
+    "id": "lilypad",
+    "weight": 1
+   },
+   {
+    "id": "living_mice",
+    "weight": 1
+   },
+   {
+    "id": "mice_on_venus",
+    "weight": 1
+   },
+   {
+    "id": "nightly",
+    "weight": 2
+   },
+   {
+    "id": "stand_tall",
+    "weight": 1
+   },
+   {
+    "id": "subwoofer_lullaby",
+    "weight": 1
+   },
+   {
+    "id": "wet_hands",
+    "weight": 1
+   }
+  ],
+  "minecraft:music.overworld.grove": [
+   {
+    "id": "clark",
+    "weight": 1
+   },
+   {
+    "id": "comforting_memories",
+    "weight": 1
+   },
+   {
+    "id": "eld_unknown",
+    "weight": 1
+   },
+   {
+    "id": "endless",
+    "weight": 1
+   },
+   {
+    "id": "infinite_amethyst",
+    "weight": 1
+   },
+   {
+    "id": "key",
+    "weight": 1
+   },
+   {
+    "id": "lilypad",
+    "weight": 1
+   },
+   {
+    "id": "mice_on_venus",
+    "weight": 1
+   },
+   {
+    "id": "minecraft",
+    "weight": 1
+   },
+   {
+    "id": "oxygene",
+    "weight": 1
+   },
+   {
+    "id": "pokopoko",
+    "weight": 1
+   },
+   {
+    "id": "shores",
+    "weight": 2
+   },
+   {
+    "id": "sweden",
+    "weight": 1
+   },
+   {
+    "id": "wending",
+    "weight": 1
+   }
+  ],
+  "minecraft:music.overworld.jagged_peaks": [
+   {
+    "id": "dry_hands",
+    "weight": 1
+   },
+   {
+    "id": "ebb",
+    "weight": 2
+   },
+   {
+    "id": "eld_unknown",
+    "weight": 1
+   },
+   {
+    "id": "endless",
+    "weight": 1
+   },
+   {
+    "id": "floating_dream",
+    "weight": 1
+   },
+   {
+    "id": "key",
+    "weight": 1
+   },
+   {
+    "id": "living_mice",
+    "weight": 1
+   },
+   {
+    "id": "mice_on_venus",
+    "weight": 1
+   },
+   {
+    "id": "nightly",
+    "weight": 2
+   },
+   {
+    "id": "oxygene",
+    "weight": 1
+   },
+   {
+    "id": "pokopoko",
+    "weight": 1
+   },
+   {
+    "id": "stand_tall",
+    "weight": 1
+   },
+   {
+    "id": "subwoofer_lullaby",
+    "weight": 1
+   },
+   {
+    "id": "wending",
+    "weight": 1
+   },
+   {
+    "id": "wet_hands",
+    "weight": 1
+   }
+  ],
+  "minecraft:music.overworld.jungle": [
+   {
+    "id": "bromeliad",
+    "weight": 1
+   },
+   {
+    "id": "danny",
+    "weight": 1
+   },
+   {
+    "id": "dry_hands",
+    "weight": 1
+   },
+   {
+    "id": "haggstrom",
+    "weight": 1
+   },
+   {
+    "id": "home",
+    "weight": 2
+   },
+   {
+    "id": "key",
+    "weight": 1
+   },
+   {
+    "id": "left_to_bloom",
+    "weight": 1
+   },
+   {
+    "id": "living_mice",
+    "weight": 1
+   },
+   {
+    "id": "mice_on_venus",
+    "weight": 1
+   },
+   {
+    "id": "oxygene",
+    "weight": 1
+   },
+   {
+    "id": "subwoofer_lullaby",
+    "weight": 1
+   },
+   {
+    "id": "wet_hands",
+    "weight": 1
+   }
+  ],
+  "minecraft:music.overworld.lush_caves": [
+   {
+    "id": "an_ordinary_day",
+    "weight": 1
+   },
+   {
+    "id": "clark",
+    "weight": 1
+   },
+   {
+    "id": "echo_in_the_wind",
+    "weight": 1
+   },
+   {
+    "id": "featherfall",
+    "weight": 1
+   },
+   {
+    "id": "floating_dream",
+    "weight": 1
+   },
+   {
+    "id": "left_to_bloom",
+    "weight": 1
+   },
+   {
+    "id": "mice_on_venus",
+    "weight": 1
+   },
+   {
+    "id": "minecraft",
+    "weight": 1
+   },
+   {
+    "id": "one_more_day",
+    "weight": 1
+   },
+   {
+    "id": "os_piano",
+    "weight": 1
+   },
+   {
+    "id": "shores",
+    "weight": 2
+   },
+   {
+    "id": "aerie",
+    "weight": 1
+   },
+   {
+    "id": "firebugs",
+    "weight": 1
+   },
+   {
+    "id": "labyrinthine",
+    "weight": 1
+   },
+   {
+    "id": "sweden",
+    "weight": 1
+   }
+  ],
+  "minecraft:music.overworld.meadow": [
+   {
+    "id": "danny",
+    "weight": 1
+   },
+   {
+    "id": "haggstrom",
+    "weight": 1
+   },
+   {
+    "id": "home",
+    "weight": 2
+   },
+   {
+    "id": "left_to_bloom",
+    "weight": 1
+   },
+   {
+    "id": "living_mice",
+    "weight": 1
+   },
+   {
+    "id": "one_more_day",
+    "weight": 2
+   },
+   {
+    "id": "subwoofer_lullaby",
+    "weight": 1
+   }
+  ],
+  "minecraft:music.overworld.old_growth_taiga": [
+   {
+    "id": "clark",
+    "weight": 1
+   },
+   {
+    "id": "comforting_memories",
+    "weight": 1
+   },
+   {
+    "id": "danny",
+    "weight": 1
+   },
+   {
+    "id": "dry_hands",
+    "weight": 1
+   },
+   {
+    "id": "floating_dream",
+    "weight": 1
+   },
+   {
+    "id": "haggstrom",
+    "weight": 1
+   },
+   {
+    "id": "key",
+    "weight": 1
+   },
+   {
+    "id": "left_to_bloom",
+    "weight": 1
+   },
+   {
+    "id": "living_mice",
+    "weight": 1
+   },
+   {
+    "id": "mice_on_venus",
+    "weight": 1
+   },
+   {
+    "id": "minecraft",
+    "weight": 1
+   },
+   {
+    "id": "one_more_day",
+    "weight": 1
+   },
+   {
+    "id": "oxygene",
+    "weight": 1
+   },
+   {
+    "id": "shores",
+    "weight": 2
+   },
+   {
+    "id": "subwoofer_lullaby",
+    "weight": 1
+   },
+   {
+    "id": "aerie",
+    "weight": 1
+   },
+   {
+    "id": "firebugs",
+    "weight": 1
+   },
+   {
+    "id": "labyrinthine",
+    "weight": 1
+   },
+   {
+    "id": "sweden",
+    "weight": 1
+   },
+   {
+    "id": "wet_hands",
+    "weight": 1
+   }
+  ],
+  "minecraft:music.overworld.snowy_slopes": [
+   {
+    "id": "an_ordinary_day",
+    "weight": 1
+   },
+   {
+    "id": "haggstrom",
+    "weight": 1
+   },
+   {
+    "id": "living_mice",
+    "weight": 1
+   },
+   {
+    "id": "nightly",
+    "weight": 2
+   },
+   {
+    "id": "one_more_day",
+    "weight": 1
+   },
+   {
+    "id": "pokopoko",
+    "weight": 1
+   },
+   {
+    "id": "stand_tall",
+    "weight": 1
+   },
+   {
+    "id": "subwoofer_lullaby",
+    "weight": 1
+   }
+  ],
+  "minecraft:music.overworld.sparse_jungle": [
+   {
+    "id": "bromeliad",
+    "weight": 1
+   },
+   {
+    "id": "danny",
+    "weight": 1
+   },
+   {
+    "id": "dry_hands",
+    "weight": 1
+   },
+   {
+    "id": "haggstrom",
+    "weight": 1
+   },
+   {
+    "id": "home",
+    "weight": 2
+   },
+   {
+    "id": "key",
+    "weight": 1
+   },
+   {
+    "id": "left_to_bloom",
+    "weight": 1
+   },
+   {
+    "id": "living_mice",
+    "weight": 1
+   },
+   {
+    "id": "mice_on_venus",
+    "weight": 1
+   },
+   {
+    "id": "oxygene",
+    "weight": 1
+   },
+   {
+    "id": "subwoofer_lullaby",
+    "weight": 1
+   },
+   {
+    "id": "wet_hands",
+    "weight": 1
+   }
+  ],
+  "minecraft:music.overworld.stony_peaks": [
+   {
+    "id": "danny",
+    "weight": 1
+   },
+   {
+    "id": "dry_hands",
+    "weight": 1
+   },
+   {
+    "id": "eld_unknown",
+    "weight": 1
+   },
+   {
+    "id": "endless",
+    "weight": 1
+   },
+   {
+    "id": "haggstrom",
+    "weight": 1
+   },
+   {
+    "id": "living_mice",
+    "weight": 1
+   },
+   {
+    "id": "mice_on_venus",
+    "weight": 1
+   },
+   {
+    "id": "nightly",
+    "weight": 2
+   },
+   {
+    "id": "stand_tall",
+    "weight": 1
+   },
+   {
+    "id": "subwoofer_lullaby",
+    "weight": 1
+   },
+   {
+    "id": "wending",
+    "weight": 1
+   },
+   {
+    "id": "wet_hands",
+    "weight": 1
+   }
+  ],
+  "minecraft:music.overworld.sulfur_caves": [
+   {
+    "id": "an_ordinary_day",
+    "weight": 1
+   },
+   {
+    "id": "danny",
+    "weight": 1
+   },
+   {
+    "id": "deeper",
+    "weight": 1
+   },
+   {
+    "id": "ebb",
+    "weight": 2
+   },
+   {
+    "id": "eld_unknown",
+    "weight": 1
+   },
+   {
+    "id": "endless",
+    "weight": 1
+   },
+   {
+    "id": "infinite_amethyst",
+    "weight": 1
+   },
+   {
+    "id": "key",
+    "weight": 1
+   },
+   {
+    "id": "nightly",
+    "weight": 2
+   },
+   {
+    "id": "oxygene",
+    "weight": 1
+   },
+   {
+    "id": "pokopoko",
+    "weight": 1
+   },
+   {
+    "id": "shores",
+    "weight": 2
+   },
+   {
+    "id": "subwoofer_lullaby",
+    "weight": 1
+   },
+   {
+    "id": "wending",
+    "weight": 1
+   }
+  ],
+  "minecraft:music.overworld.swamp": [
+   {
+    "id": "ebb",
+    "weight": 1
+   },
+   {
+    "id": "aerie",
+    "weight": 1
+   },
+   {
+    "id": "firebugs",
+    "weight": 1
+   },
+   {
+    "id": "labyrinthine",
+    "weight": 1
+   }
+  ],
+  "minecraft:music.under_water": [
+   {
+    "id": "axolotl",
+    "weight": 1
+   },
+   {
+    "id": "dragon_fish",
+    "weight": 1
+   },
+   {
+    "id": "shuniji",
+    "weight": 1
+   }
+  ]
+ }
+}

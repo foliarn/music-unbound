@@ -10,8 +10,8 @@ description='''
 Client-side music manager: every song can play anywhere, presets from Alpha to today, and the newest tracks backported to 1.21.1.
 '''
 
-#[[mixins]]
-#config="${mod_id}.mixins.json"
+[[mixins]]
+config="${mod_id}.mixins.json"
 
 # Client-only: dependencies are only enforced on the client.
 [[dependencies.${mod_id}]]

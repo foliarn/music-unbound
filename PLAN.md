@@ -82,8 +82,7 @@ Each preset is **cumulative**: every background track that existed in that versi
 
 | Preset | Added in this update | Total |
 |---|---|---|
-| **Alpha (a1.2.6)** | Minecraft, Clark, Sweden, Dry Hands, Wet Hands, Mice on Venus, Subwoofer Lullaby, Living Mice, Haggstrom, Danny, Key, Oxygène | 12 |
-| **Beta (b1.8.1)** | *nothing: same 12 songs* (Beta ended Nov 2011, and the next music came in Nov 2013) | 12 |
+| **Alpha & Beta (a1.2.6 – b1.8.1)** | Minecraft, Clark, Sweden, Dry Hands, Wet Hands, Mice on Venus, Subwoofer Lullaby, Living Mice, Haggstrom, Danny, Key, Oxygène | 12 |
 | **Music Update (1.7, Nov 2013)** | Menu: Mutation, Moog City 2, Beginning 2, Floating Trees · Creative: Biome Fest, Blind Spots, Haunt Muskie, Aria Math, Dreiton, Taswell · Nether: Concrete Halls, Dead Voxel, Warmth, Ballad of the Cats · The End, Boss, Alpha | 29 |
 | **Update Aquatic (1.13)** | Axolotl, Dragon Fish, Shuniji | 32 |
 | **Nether Update (1.16)** | Rubedo, Chrysopoeia, So Below | 35 |
@@ -99,16 +98,18 @@ Counts were checked: 60 matches the 1.21.1 asset index and 70 matches 26.3.
 - **Menu music in Alpha / Beta presets:** those versions had **no title screen music**, so the authentic default is a silent menu. The Menu column can still be changed.
 - The **Tracks screen is grouped by update** (same groups as above). Each group has a "toggle all" checkbox.
 
-### Era timing
-When the Frequency setting is **Era**, a version preset also uses that version's gaps between songs. These are remembered values, **to be confirmed by decompiling each version during M1**:
+### Era timing (verified by decompiling a1.2.6, b1.8.1, 1.7.10, 1.12.2, 1.13.2, 1.21.1, 26.3)
+When the Frequency setting is **Era-accurate**, a version preset also uses that version's gaps between songs:
 
-| Era | Gaps (from memory, unverified) |
+| Era | Gaps between songs |
 |---|---|
-| Alpha / Beta | First song 0–10 min after joining, then 10–20 min between songs. Same in Alpha and Beta? |
-| 1.7 – 1.12 | Survival 10–20 min · Creative **1–3 min** · Nether **1–3 min** · End 5–20 min · Menu 1–30 s |
-| 1.13 → latest | Taken from each version's vanilla `Musics` values |
+| Alpha / Beta | 10–20 min everywhere (the first song came 0–10 min after joining). **Identical in a1.2.6 and b1.8.1** |
+| 1.7 – 1.13 | Survival 10–20 min · Creative **1–3 min** · Nether **1–3 min** · End 5–20 min · Underwater (1.13) 10–20 min · Menu 1–30 s |
+| 1.16 → latest | Survival, Creative, Nether, Underwater 10–20 min · End 5–20 min · Menu 1–30 s |
 
-**Rule:** if Alpha and Beta have identical songs **and** identical timing, the two presets are merged into one **"Alpha & Beta"** preset. Otherwise they stay separate.
+Vanilla 1.21.6+ frequency values (from 26.3's code): **Frequent** caps the gap at 10 min, and **Constant** waits 5 s.
+
+➡ Alpha and Beta have the same songs and the same timing, so they are **merged into one "Alpha & Beta" preset**.
 
 ### Other presets
 `All` (**default on first launch**) · `Vanilla 1.21.1` (mod does nothing except the extras) · `Vanilla latest` (current vanilla's mapping, including the new tracks) · `New only` (the 10 added after 1.21.1) · `Custom` (any checkbox change).
