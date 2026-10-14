@@ -1,7 +1,9 @@
 package com.musicunbound;
 
 import com.mojang.logging.LogUtils;
+import com.musicunbound.client.MusicKeys;
 import com.musicunbound.client.NowPlaying;
+import com.musicunbound.client.PausePlayer;
 import com.musicunbound.client.ui.MusicUi;
 import com.musicunbound.config.MusicConfig;
 import com.musicunbound.data.ModdedMusic;
@@ -36,5 +38,7 @@ public final class MusicUnbound {
         ModdedMusic.register(modBus);
         MusicUi.register(container);
         NowPlaying.register();
+        PausePlayer.register();
+        MusicKeys.register(modBus);
     }
 }

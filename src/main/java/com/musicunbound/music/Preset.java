@@ -1,6 +1,5 @@
 package com.musicunbound.music;
 
-import com.musicunbound.config.MusicConfig;
 import com.musicunbound.data.Era;
 import com.musicunbound.data.Track;
 import com.musicunbound.data.TrackCatalog;
@@ -23,8 +22,7 @@ public enum Preset {
     ERA_TRICKY_TRIALS("tricky_trials"),
     ERA_CHASE_THE_SKIES("chase_the_skies"),
     ERA_CHAOS_CUBED("chaos_cubed"),
-    NEW_ONLY(null),
-    CUSTOM(null);
+    NEW_ONLY(null);
 
     @Nullable
     private final String eraId;
@@ -44,7 +42,6 @@ public enum Preset {
             case VANILLA_1_21_1 -> "Vanilla 1.21.1";
             case VANILLA_LATEST -> "Vanilla (latest)";
             case NEW_ONLY -> "New only";
-            case CUSTOM -> "Custom";
             default -> {
                 Era era = eraObject();
                 yield era != null ? era.name() : name();
@@ -57,11 +54,7 @@ public enum Preset {
     public Set<String> gameTracks() {
         TrackCatalog catalog = TrackCatalog.get();
         Set<String> ids = new LinkedHashSet<>();
-        if (this == CUSTOM) {
-            for (String id : MusicConfig.CUSTOM_GAME_TRACKS.get()) {
-                catalog.byId(id).filter(Track::gameAllowed).ifPresent(t -> ids.add(t.id()));
-            }
-        } else if (this == NEW_ONLY) {
+        if (this == NEW_ONLY) {
             for (Track t : catalog.tracks()) {
                 if (t.remote()) {
                     ids.add(t.id());
@@ -91,11 +84,7 @@ public enum Preset {
     public Set<String> menuTracks() {
         TrackCatalog catalog = TrackCatalog.get();
         Set<String> ids = new LinkedHashSet<>();
-        if (this == CUSTOM) {
-            for (String id : MusicConfig.CUSTOM_MENU_TRACKS.get()) {
-                catalog.byId(id).ifPresent(t -> ids.add(t.id()));
-            }
-        } else if (this == NEW_ONLY) {
+        if (this == NEW_ONLY) {
             for (Track t : catalog.tracks()) {
                 if (t.remote()) {
                     ids.add(t.id());

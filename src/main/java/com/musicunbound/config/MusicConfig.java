@@ -1,15 +1,12 @@
 package com.musicunbound.config;
 
 import com.musicunbound.music.Frequency;
-import com.musicunbound.music.Preset;
-import java.util.List;
 import net.neoforged.neoforge.common.ModConfigSpec;
 
 /** Client config (config/musicunbound-client.toml). */
 public final class MusicConfig {
     public static final ModConfigSpec SPEC;
 
-    public static final ModConfigSpec.EnumValue<Preset> PRESET;
     public static final ModConfigSpec.EnumValue<Frequency> FREQUENCY;
     public static final ModConfigSpec.IntValue CUSTOM_MIN_MINUTES;
     public static final ModConfigSpec.IntValue CUSTOM_MAX_MINUTES;
@@ -32,17 +29,8 @@ public final class MusicConfig {
     public static final ModConfigSpec.BooleanValue EVENT_WEATHER;
     public static final ModConfigSpec.IntValue EVENT_COOLDOWN_MINUTES;
 
-    public static final ModConfigSpec.ConfigValue<List<? extends String>> CUSTOM_GAME_TRACKS;
-    public static final ModConfigSpec.ConfigValue<List<? extends String>> CUSTOM_MENU_TRACKS;
-
     static {
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
-
-        b.comment("Which tracks can play. Custom uses customGameTracks and customMenuTracks.")
-                .push("presets");
-        PRESET = b.comment("ALL, VANILLA_1_21_1 (mod does nothing), VANILLA_LATEST, an ERA_* version preset, NEW_ONLY or CUSTOM.")
-                .defineEnum("preset", Preset.ALL);
-        b.pop();
 
         b.comment("How long to wait between songs. CUSTOM uses the minutes below. ERA uses each version's own gaps.")
                 .push("frequency");
@@ -96,14 +84,6 @@ public final class MusicConfig {
                 .define("weather", true);
         EVENT_COOLDOWN_MINUTES = b.comment("Minimum minutes between two event songs.")
                 .defineInRange("cooldownMinutes", 10, 0, 60);
-        b.pop();
-
-        b.comment("Used only when preset is CUSTOM. Track ids from tracks.json, for example \"aerie\".")
-                .push("custom");
-        CUSTOM_GAME_TRACKS = b.comment("Track ids for the in-game rotation.")
-                .defineListAllowEmpty("customGameTracks", List.<String>of(), () -> "", o -> o instanceof String);
-        CUSTOM_MENU_TRACKS = b.comment("Track ids for the title screen.")
-                .defineListAllowEmpty("customMenuTracks", List.<String>of(), () -> "", o -> o instanceof String);
         b.pop();
 
         SPEC = b.build();

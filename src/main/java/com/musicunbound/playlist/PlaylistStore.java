@@ -47,14 +47,12 @@ public final class PlaylistStore {
     private PlaylistStore() {
     }
 
-    /** The built-in playlists in enum order (every {@link Preset} except CUSTOM). Computed lazily, once. */
+    /** The built-in playlists in enum order (every {@link Preset}). Computed lazily, once. */
     public static synchronized List<Playlist> builtIns() {
         if (builtIns == null) {
             List<Playlist> list = new ArrayList<>();
             for (Preset preset : Preset.values()) {
-                if (preset != Preset.CUSTOM) {
-                    list.add(builtIn(preset));
-                }
+                list.add(builtIn(preset));
             }
             builtIns = Collections.unmodifiableList(list);
         }

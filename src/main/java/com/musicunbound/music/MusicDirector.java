@@ -76,13 +76,6 @@ public final class MusicDirector {
         }
     }
 
-    /** While true (a track preview is playing), no background music plays. Null music also resets vanilla's wait. */
-    private static volatile boolean suppressed;
-
-    public static void setSuppressed(boolean value) {
-        suppressed = value;
-    }
-
     /** Makes {@code track} the playing song until something else plays, even if it is not in the pool. Null clears it. */
     public void setForced(@Nullable Track track) {
         forced = track;
@@ -90,10 +83,6 @@ public final class MusicDirector {
 
     /** Event handler for {@link SelectMusicEvent}. */
     public void onSelectMusic(SelectMusicEvent event) {
-        if (suppressed) {
-            event.setMusic(null);
-            return;
-        }
         // Another mod already changed the music: leave it alone.
         if (event.getMusic() != event.getOriginalMusic()) {
             return;
@@ -107,9 +96,6 @@ public final class MusicDirector {
      */
     @Nullable
     public Music decide(Music original, @Nullable SoundInstance playing, boolean forceNewPick) {
-        if (suppressed) {
-            return null;
-        }
         Playlist playlist = PlaylistStore.active();
         if (playlist.kind() == Playlist.Kind.VANILLA_1_21_1) {
             return original;
