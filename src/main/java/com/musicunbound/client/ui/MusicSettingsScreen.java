@@ -30,14 +30,14 @@ public class MusicSettingsScreen extends OptionsSubScreen {
     @Override
     protected void addOptions() {
         Component presetCaption = Component.translatable("musicunbound.option.preset");
-        CycleButton<Preset> preset = CycleButton.<Preset>builder(p -> CommonComponents.optionNameValue(presetCaption, p.displayName()))
+        CycleButton<Preset> preset = CycleButton.<Preset>builder(p -> p.displayName())
                 .withValues(Preset.values())
                 .withInitialValue(MusicConfig.PRESET.get())
                 .create(0, 0, ROW_WIDTH, 20, presetCaption, (button, value) -> MusicConfig.PRESET.set(value));
         this.list.addSmall(preset, null);
 
         Component frequencyCaption = Component.translatable("musicunbound.option.frequency");
-        CycleButton<Frequency> frequency = CycleButton.<Frequency>builder(f -> CommonComponents.optionNameValue(frequencyCaption, f.displayName()))
+        CycleButton<Frequency> frequency = CycleButton.<Frequency>builder(f -> f.displayName())
                 .withValues(Frequency.values())
                 .withInitialValue(MusicConfig.FREQUENCY.get())
                 .create(0, 0, ROW_WIDTH, 20, frequencyCaption, (button, value) -> {
@@ -55,10 +55,10 @@ public class MusicSettingsScreen extends OptionsSubScreen {
         updateCustomSliders();
 
         this.list.addSmall(
-                toggle("musicunbound.option.netherKeepsMusic", MusicConfig.NETHER_KEEPS_MUSIC),
-                toggle("musicunbound.option.endKeepsMusic", MusicConfig.END_KEEPS_MUSIC),
-                toggle("musicunbound.option.deepDarkKeepsMusic", MusicConfig.DEEP_DARK_KEEPS_MUSIC),
-                toggle("musicunbound.option.underwaterKeepsMusic", MusicConfig.UNDERWATER_KEEPS_MUSIC));
+                keepsMusicToggle("musicunbound.option.netherKeepsMusic", "musicunbound.tooltip.netherKeepsMusic", MusicConfig.NETHER_KEEPS_MUSIC),
+                keepsMusicToggle("musicunbound.option.endKeepsMusic", "musicunbound.tooltip.endKeepsMusic", MusicConfig.END_KEEPS_MUSIC),
+                keepsMusicToggle("musicunbound.option.deepDarkKeepsMusic", "musicunbound.tooltip.deepDarkKeepsMusic", MusicConfig.DEEP_DARK_KEEPS_MUSIC),
+                keepsMusicToggle("musicunbound.option.underwaterKeepsMusic", "musicunbound.tooltip.underwaterKeepsMusic", MusicConfig.UNDERWATER_KEEPS_MUSIC));
 
         this.list.addSmall(
                 toggle("musicunbound.option.showToast", MusicConfig.SHOW_TOAST),
@@ -93,6 +93,16 @@ public class MusicSettingsScreen extends OptionsSubScreen {
 
     private static OptionInstance<Boolean> toggle(String caption, ModConfigSpec.BooleanValue value) {
         return OptionInstance.createBoolean(caption, OptionInstance.<Boolean>noTooltip(), value.get(), value::set);
+    }
+
+    /** true = the dimension keeps its own vanilla music ("Own"), false = it plays the playlist ("Shared"). */
+    private static OptionInstance<Boolean> keepsMusicToggle(String caption, String tooltip, ModConfigSpec.BooleanValue value) {
+        return OptionInstance.createBoolean(
+                caption,
+                OptionInstance.cachedConstantTooltip(Component.translatable(tooltip)),
+                (captionText, own) -> Component.translatable(own ? "musicunbound.value.own" : "musicunbound.value.shared"),
+                value.get(),
+                value::set);
     }
 
     /** Config is written on each change; saving to disk happens when this screen (or the tracks screen above it) closes. */
