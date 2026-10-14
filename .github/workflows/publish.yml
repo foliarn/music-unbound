@@ -32,7 +32,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           fetch-depth: 0
           fetch-tags: true
@@ -63,13 +63,13 @@ jobs:
           fi
 
       - name: Setup JDK 21
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           java-version: '21'
           distribution: 'temurin'
 
       - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v4
+        uses: gradle/actions/setup-gradle@v5
 
       - name: Build with Gradle
         run: ./gradlew build
@@ -81,7 +81,11 @@ jobs:
           REF_NAME: ${{ github.ref_name }}
         run: |
           NOTES=""
-          if [ "$REF_TYPE" = "tag" ] && [ "$(git for-each-ref --format='%(objecttype)' "refs/tags/$REF_NAME")" = "tag" ]; then
+          # actions/checkout fetches the pushed tag without its annotation; fetch the real tag object.
+          if [ "$REF_TYPE" = "tag" ]; then
+            git fetch --force origin "refs/tags/$REF_NAME:refs/tags/$REF_NAME"
+          fi
+          if [ "$REF_TYPE" = "tag" ] &&[ "$(git for-each-ref --format='%(objecttype)' "refs/tags/$REF_NAME")" = "tag" ]; then
             NOTES="$(git for-each-ref --format='%(contents)' "refs/tags/$REF_NAME")"
           fi
           if [ -z "$(printf '%s' "$NOTES" | tr -d '[:space:]')" ]; then
