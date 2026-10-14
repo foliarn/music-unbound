@@ -1,11 +1,14 @@
 modLoader="javafml"
 loaderVersion="${loader_version_range}"
 license="${mod_license}"
+issueTrackerURL="https://github.com/foliarn/music-unbound/issues"
 
 [[mods]]
 modId="${mod_id}"
 version="${mod_version}"
 displayName="${mod_name}"
+displayURL="https://github.com/foliarn/music-unbound"
+authors="foliarn"
 description='''
 Client-side music manager: every song can play anywhere, presets from Alpha to today, and the newest tracks backported to 1.21.1.
 '''
