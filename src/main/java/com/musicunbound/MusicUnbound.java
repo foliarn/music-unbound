@@ -4,8 +4,12 @@ import com.mojang.logging.LogUtils;
 import com.musicunbound.client.NowPlaying;
 import com.musicunbound.client.ui.MusicUi;
 import com.musicunbound.config.MusicConfig;
+import com.musicunbound.data.ModdedMusic;
 import com.musicunbound.data.TrackCatalog;
+import com.musicunbound.audio.MusicFader;
 import com.musicunbound.music.MusicDirector;
+import com.musicunbound.music.MusicEvents;
+import com.musicunbound.music.Playback;
 import com.musicunbound.remote.RemoteTracks;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
@@ -24,8 +28,12 @@ public final class MusicUnbound {
     public MusicUnbound(IEventBus modBus, ModContainer container) {
         container.registerConfig(ModConfig.Type.CLIENT, MusicConfig.SPEC);
         LOGGER.info("Loaded {} tracks", TrackCatalog.get().tracks().size());
-        NeoForge.EVENT_BUS.addListener(new MusicDirector()::onSelectMusic);
+        NeoForge.EVENT_BUS.addListener(MusicDirector.INSTANCE::onSelectMusic);
+        Playback.register();
+        MusicEvents.register();
+        MusicFader.register();
         RemoteTracks.register(modBus);
+        ModdedMusic.register(modBus);
         MusicUi.register(container);
         NowPlaying.register();
     }

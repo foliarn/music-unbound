@@ -2,77 +2,54 @@ package com.musicunbound.client;
 
 import com.musicunbound.config.MusicConfig;
 import com.musicunbound.data.Track;
-import com.musicunbound.data.TrackCatalog;
-import java.util.Optional;
+import com.musicunbound.music.Playback;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.PauseScreen;
 import net.minecraft.client.resources.sounds.SoundInstance;
-import net.minecraft.sounds.SoundSource;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.client.event.ScreenEvent;
-import net.neoforged.neoforge.client.event.sound.PlaySoundEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import org.jetbrains.annotations.Nullable;
 
 /**
- * Tracks which catalog track is playing, shows the Now Playing toast, keeps music ticking while paused,
- * and adds the track to the pause menu.
+ * Shows the Now Playing toast when a new song starts, keeps music ticking while paused,
+ * and adds the current track to the pause menu. The tracking itself lives in {@link Playback}.
  */
 public final class NowPlaying {
     private static final String NOTE = "♪ ";
     private static final String DASH = " — ";
     private static final int PAUSE_LINE_COLOR = 0xFFAAAAAA;
 
-    /** Music sound that was started this frame and is not resolved yet (its {@code getSound()} is still null). */
+    /** The instance the toast was last shown for. A new instance (even of the same track) means a new song. */
     @Nullable
-    private static SoundInstance candidate;
-    @Nullable
-    private static SoundInstance currentInstance;
-    @Nullable
-    private static Track currentTrack;
+    private static SoundInstance shownInstance;
 
     private NowPlaying() {
     }
 
     public static void register() {
-        NeoForge.EVENT_BUS.addListener(NowPlaying::onPlaySound);
         NeoForge.EVENT_BUS.addListener(NowPlaying::onClientTickPost);
         NeoForge.EVENT_BUS.addListener(NowPlaying::onPauseScreenRender);
     }
 
-    /** The catalog track that is playing right now, or null if it is not a catalog track (or nothing plays). */
+    /** The catalog track that is playing right now, or null. Same as {@link Playback#current()}. */
     @Nullable
     public static Track current() {
-        return currentTrack;
-    }
-
-    private static void onPlaySound(PlaySoundEvent event) {
-        SoundInstance sound = event.getSound();
-        if (sound != null && sound.getSource() == SoundSource.MUSIC) {
-            candidate = sound;
-        }
+        return Playback.current();
     }
 
     private static void onClientTickPost(ClientTickEvent.Post event) {
         Minecraft mc = Minecraft.getInstance();
 
-        if (candidate != null && candidate.getSound() != null) {
-            Optional<Track> track = TrackCatalog.get().byFile(candidate.getSound().getLocation());
-            if (track.isPresent() && candidate != currentInstance) {
-                currentInstance = candidate;
-                currentTrack = track.get();
-                if (MusicConfig.SHOW_TOAST.get()) {
-                    NowPlayingToast.show(mc.getToasts(), track.get());
-                }
+        SoundInstance playing = Playback.currentInstance();
+        if (playing != null && playing != shownInstance) {
+            shownInstance = playing;
+            Track track = Playback.current();
+            if (track != null && MusicConfig.SHOW_TOAST.get()) {
+                NowPlayingToast.show(mc.getToasts(), track);
             }
-            candidate = null;
-        }
-
-        if (currentInstance != null && !mc.getSoundManager().isActive(currentInstance)) {
-            currentInstance = null;
-            currentTrack = null;
         }
 
         // Vanilla skips MusicManager.tick() while paused, so the next song would never start.
@@ -85,7 +62,7 @@ public final class NowPlaying {
         if (!(event.getScreen() instanceof PauseScreen) || !MusicConfig.SHOW_IN_PAUSE_MENU.get()) {
             return;
         }
-        Track track = current();
+        Track track = Playback.current();
         if (track == null) {
             return;
         }

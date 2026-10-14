@@ -18,39 +18,46 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.Nullable;
 
-/** The bundled track data ({@code assets/musicunbound/tracks.json}), loaded once. */
+/**
+ * The track data: the bundled {@code assets/musicunbound/tracks.json}, plus dynamic tracks added at runtime
+ * (new Mojang tracks and other mods' music). Lookups are safe to call from any thread.
+ */
 public final class TrackCatalog {
     private static final String RESOURCE = "/assets/musicunbound/tracks.json";
+    /** Era of Mojang tracks that are newer than the bundled data. */
+    public static final String FUTURE_ERA = "future";
+    /** Era of music sound events registered by other mods. */
+    public static final String MODS_ERA = "mods";
     private static volatile TrackCatalog instance;
 
     /** A track id with its weight (used by the vanilla-latest mapping). */
     public record WeightedId(String id, int weight) {
     }
 
-    private final List<Track> tracks;
-    private final Map<String, Track> byId;
-    private final Map<ResourceLocation, Track> byFile;
+    /** Immutable snapshot, replaced on every {@link #addDynamic}. */
+    private volatile List<Track> tracks;
+    private final Map<String, Track> byId = new ConcurrentHashMap<>();
+    private final Map<ResourceLocation, Track> byFile = new ConcurrentHashMap<>();
+    private final Map<ResourceLocation, Track> byEvent = new ConcurrentHashMap<>();
     private final List<Era> eras;
     private final Map<String, Era> erasById;
     private final Map<ResourceLocation, List<WeightedId>> vanillaLatest;
 
     private TrackCatalog(List<Track> tracks, List<Era> eras, Map<ResourceLocation, List<WeightedId>> vanillaLatest) {
-        this.tracks = Collections.unmodifiableList(tracks);
-        this.eras = Collections.unmodifiableList(eras);
         this.vanillaLatest = Collections.unmodifiableMap(vanillaLatest);
-        this.byId = new HashMap<>();
-        this.byFile = new HashMap<>();
-        for (Track track : tracks) {
-            byId.put(track.id(), track);
-            byFile.put(track.file(), track);
-        }
+        this.eras = List.copyOf(withSyntheticEras(eras));
         this.erasById = new HashMap<>();
-        for (Era era : eras) {
+        for (Era era : this.eras) {
             erasById.put(era.id(), era);
         }
+        for (Track track : tracks) {
+            index(track);
+        }
+        this.tracks = List.copyOf(tracks);
     }
 
     public static TrackCatalog get() {
@@ -67,7 +74,7 @@ public final class TrackCatalog {
         return catalog;
     }
 
-    /** All tracks in JSON order. */
+    /** All tracks: the bundled ones in JSON order, then dynamic ones in the order they were added. A stable snapshot. */
     public List<Track> tracks() {
         return tracks;
     }
@@ -81,7 +88,27 @@ public final class TrackCatalog {
         return Optional.ofNullable(byFile.get(file));
     }
 
-    /** Eras in JSON order (oldest first). */
+    /** Lookup by the sound event a track plays (see {@link Track#eventId()}). */
+    public Optional<Track> byEvent(ResourceLocation soundEventId) {
+        return Optional.ofNullable(byEvent.get(soundEventId));
+    }
+
+    /**
+     * Adds a track at runtime. A track whose id is already in the catalog is ignored.
+     * Safe to call from the downloader thread.
+     */
+    public synchronized void addDynamic(Track track) {
+        if (byId.containsKey(track.id())) {
+            return;
+        }
+        index(track);
+        List<Track> next = new ArrayList<>(tracks.size() + 1);
+        next.addAll(tracks);
+        next.add(track);
+        tracks = List.copyOf(next);
+    }
+
+    /** Eras in JSON order (oldest first), followed by the synthetic {@value #FUTURE_ERA} and {@value #MODS_ERA} eras. */
     public List<Era> eras() {
         return eras;
     }
@@ -95,6 +122,20 @@ public final class TrackCatalog {
     @Nullable
     public List<WeightedId> vanillaLatest(ResourceLocation soundEventId) {
         return vanillaLatest.get(soundEventId);
+    }
+
+    private void index(Track track) {
+        byId.put(track.id(), track);
+        byFile.putIfAbsent(track.file(), track);
+        byEvent.putIfAbsent(track.eventId(), track);
+    }
+
+    private static List<Era> withSyntheticEras(List<Era> jsonEras) {
+        List<Era> all = new ArrayList<>(jsonEras);
+        Map<String, int[]> timing = jsonEras.get(jsonEras.size() - 1).timing();
+        all.add(new Era(FUTURE_ERA, "Newer updates", true, timing, all.size()));
+        all.add(new Era(MODS_ERA, "Other mods", false, timing, all.size()));
+        return all;
     }
 
     private static TrackCatalog load() {
@@ -143,7 +184,8 @@ public final class TrackCatalog {
                     o.get("gameAllowed").getAsBoolean(),
                     o.get("menuAll").getAsBoolean(),
                     Set.copyOf(menuEras),
-                    o.has("length") ? o.get("length").getAsInt() : 0));
+                    o.has("length") ? o.get("length").getAsInt() : 0,
+                    null));
         }
         return tracks;
     }

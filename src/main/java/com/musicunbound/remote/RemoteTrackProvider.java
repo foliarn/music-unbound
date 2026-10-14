@@ -22,18 +22,25 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.time.Duration;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HexFormat;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.regex.Pattern;
 import net.minecraft.client.Minecraft;
+import net.minecraft.resources.ResourceLocation;
 import net.neoforged.fml.loading.FMLPaths;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Makes the tracks that 1.21.1 doesn't ship available: downloads them once from Mojang's asset server
  * into the shared {@code assets/objects} store, verifies the SHA-1, and remembers which ones are ready.
+ * Also finds Mojang music added after this mod was built and adds it to the catalog as "newer updates" tracks.
  */
 public final class RemoteTrackProvider {
     public enum Status { PENDING, DOWNLOADING, AVAILABLE, FAILED, DISABLED }
@@ -41,6 +48,14 @@ public final class RemoteTrackProvider {
     private static final String MANIFEST_URL = "https://piston-meta.mojang.com/mc/game/version_manifest_v2.json";
     private static final String DOWNLOAD_BASE = "https://resources.download.minecraft.net/";
     private static final String THREAD_NAME = "MusicUnbound-Downloader";
+    /** The asset index is read again after this long, so that newly released Mojang tracks are found. */
+    private static final long INDEX_MAX_AGE_MILLIS = Duration.ofHours(24).toMillis();
+    /** Cache key that holds the time the asset index was last read. Not a track id (it has a {@code $}). */
+    private static final String INDEX_CHECKED_KEY = "$indexChecked";
+    private static final String MUSIC_PREFIX = "minecraft/sounds/music/";
+    private static final String OGG = ".ogg";
+    private static final Pattern TRACK_ID = Pattern.compile("[a-z0-9_]+");
+    private static final Set<String> GAME_DEFAULT_CATEGORIES = Set.of("overworld", "menu", "creative", "underwater");
 
     private static final HttpClient HTTP = HttpClient.newBuilder()
             .connectTimeout(Duration.ofSeconds(15))
@@ -49,9 +64,16 @@ public final class RemoteTrackProvider {
 
     private static final Map<String, Path> AVAILABLE = new ConcurrentHashMap<>();
     private static final Map<String, Status> STATUS = new ConcurrentHashMap<>();
+    /**
+     * Mojang tracks found after startup. They download now, but their sound events only exist after a restart,
+     * so they are not playable until then.
+     */
+    private static final Set<String> FOUND_THIS_SESSION = ConcurrentHashMap.newKeySet();
     private static final AtomicBoolean STARTED = new AtomicBoolean();
 
     private static volatile Path assetDirectory;
+    /** The cache as it was when the session started. Read once, before the downloader thread may write it. */
+    private static Cache startupCache;
 
     static {
         for (Track track : TrackCatalog.get().tracks()) {
@@ -59,7 +81,7 @@ public final class RemoteTrackProvider {
                 STATUS.put(track.id(), Status.PENDING);
             }
         }
-        TrackAvailability.remoteAvailable = AVAILABLE::containsKey;
+        TrackAvailability.remoteAvailable = id -> AVAILABLE.containsKey(id) && !FOUND_THIS_SESSION.contains(id);
     }
 
     private RemoteTrackProvider() {
@@ -75,6 +97,7 @@ public final class RemoteTrackProvider {
         if (!STARTED.compareAndSet(false, true)) {
             return;
         }
+        startupCache();
         Path assets = assetDirectory;
         if (assets == null) {
             assets = Minecraft.getInstance().gameDirectory.toPath().resolve("assets");
@@ -105,28 +128,57 @@ public final class RemoteTrackProvider {
         return Optional.ofNullable(AVAILABLE.get(trackId));
     }
 
-    private static void run(Path assets) {
-        List<Track> remote = new ArrayList<>();
-        for (Track track : TrackCatalog.get().tracks()) {
-            if (track.remote()) {
-                remote.add(track);
+    /** Whether a Mojang track was found after startup, so it can't be played until the game restarts. */
+    public static boolean isFoundThisSession(String trackId) {
+        return FOUND_THIS_SESSION.contains(trackId);
+    }
+
+    /**
+     * The Mojang tracks that were in the cache when the session started. Only these get sound events
+     * (see {@link RemoteTracksPack}), so only these can be played in this session.
+     */
+    public static List<Track> startupDynamicTracks() {
+        List<Track> tracks = new ArrayList<>();
+        for (Map.Entry<String, Entry> e : startupCache().entries().entrySet()) {
+            if (e.getValue().isDynamic()) {
+                tracks.add(dynamicTrack(e.getKey(), e.getValue()));
             }
         }
-        Path cacheFile = FMLPaths.CONFIGDIR.get().resolve(MusicUnbound.MOD_ID).resolve("remote_tracks.json");
-        Map<String, Entry> cache = loadCache(cacheFile);
+        return tracks;
+    }
+
+    private static void run(Path assets) {
+        Cache startup = startupCache();
+        Map<String, Entry> cache = new LinkedHashMap<>(startup.entries());
+        long indexChecked = startup.indexCheckedMillis();
         boolean allowDownloads = MusicConfig.DOWNLOAD_NEW_TRACKS.get();
 
-        boolean missingFromCache = remote.stream().anyMatch(t -> !cache.containsKey(t.id()));
-        if (missingFromCache && allowDownloads) {
+        for (Track track : startupDynamicTracks()) {
+            addDynamic(track, false);
+        }
+
+        List<Track> known = remoteTracks();
+        boolean missingFromCache = known.stream().anyMatch(t -> !cache.containsKey(t.id()));
+        boolean indexStale = System.currentTimeMillis() - indexChecked > INDEX_MAX_AGE_MILLIS;
+        if ((missingFromCache || indexStale) && allowDownloads) {
             try {
-                Map<String, Entry> index = fetchIndex(remote);
+                Map<String, Entry> index = fetchIndex(known);
                 cache.putAll(index);
-                saveCache(cacheFile, cache);
+                indexChecked = System.currentTimeMillis();
+                for (Map.Entry<String, Entry> e : index.entrySet()) {
+                    if (e.getValue().isDynamic() && TrackCatalog.get().byId(e.getKey()).isEmpty()) {
+                        Track track = dynamicTrack(e.getKey(), e.getValue());
+                        addDynamic(track, true);
+                        MusicUnbound.LOGGER.info("Found new track '{}'. It will download now and be playable after you restart the game.", track.id());
+                    }
+                }
+                saveCache(cacheFile(), cache, indexChecked);
             } catch (Exception e) {
                 MusicUnbound.LOGGER.warn("Could not load the Minecraft asset index, new tracks will not download: {}", e.toString());
             }
         }
 
+        List<Track> remote = remoteTracks();
         for (Track track : remote) {
             Entry entry = cache.get(track.id());
             if (entry == null) {
@@ -151,6 +203,46 @@ public final class RemoteTrackProvider {
 
         long available = remote.stream().filter(t -> AVAILABLE.containsKey(t.id())).count();
         MusicUnbound.LOGGER.info("New tracks: {}/{} available", available, remote.size());
+    }
+
+    /** Adds a Mojang track to the catalog as pending. {@code found} means it was discovered after startup. */
+    private static void addDynamic(Track track, boolean found) {
+        if (TrackCatalog.get().byId(track.id()).isPresent()) {
+            return;
+        }
+        if (found) {
+            FOUND_THIS_SESSION.add(track.id());
+        }
+        STATUS.putIfAbsent(track.id(), Status.PENDING);
+        TrackCatalog.get().addDynamic(track);
+    }
+
+    private static List<Track> remoteTracks() {
+        List<Track> remote = new ArrayList<>();
+        for (Track track : TrackCatalog.get().tracks()) {
+            if (track.remote()) {
+                remote.add(track);
+            }
+        }
+        return remote;
+    }
+
+    private static Track dynamicTrack(String id, Entry entry) {
+        String category = entry.category();
+        return new Track(
+                id,
+                Track.titleFromId(id),
+                "Minecraft",
+                TrackCatalog.FUTURE_ERA,
+                category,
+                ResourceLocation.parse(entry.file()),
+                true,
+                GAME_DEFAULT_CATEGORIES.contains(category),
+                !"end".equals(category),
+                false,
+                Set.of(),
+                0,
+                null);
     }
 
     private static void download(String id, Entry entry, Path target) throws IOException, InterruptedException, NoSuchAlgorithmException {
@@ -195,8 +287,11 @@ public final class RemoteTrackProvider {
         }
     }
 
-    /** Looks up each remote track's hash and size in the vanilla asset index for the latest release. */
-    private static Map<String, Entry> fetchIndex(List<Track> remote) throws IOException, InterruptedException {
+    /**
+     * Reads the latest release's asset index. Returns the entries for the {@code known} remote tracks, plus every
+     * music file whose id the catalog doesn't know yet (Mojang tracks added after this mod was built).
+     */
+    private static Map<String, Entry> fetchIndex(List<Track> known) throws IOException, InterruptedException {
         JsonObject manifest = getJson(MANIFEST_URL);
         String latest = manifest.getAsJsonObject("latest").get("release").getAsString();
         String versionUrl = null;
@@ -213,17 +308,57 @@ public final class RemoteTrackProvider {
         String indexUrl = getJson(versionUrl).getAsJsonObject("assetIndex").get("url").getAsString();
         JsonObject objects = getJson(indexUrl).getAsJsonObject("objects");
 
-        Map<String, Entry> result = new ConcurrentHashMap<>();
-        for (Track track : remote) {
+        Map<String, Entry> result = new LinkedHashMap<>();
+        for (Track track : known) {
             String key = "minecraft/sounds/" + track.file().getPath() + ".ogg";
             JsonObject object = objects.has(key) ? objects.getAsJsonObject(key) : null;
             if (object == null) {
                 MusicUnbound.LOGGER.warn("New track '{}' ({}) is missing from the asset index", track.id(), key);
                 continue;
             }
-            result.put(track.id(), new Entry(object.get("hash").getAsString(), object.get("size").getAsLong()));
+            String hash = object.get("hash").getAsString();
+            long size = object.get("size").getAsLong();
+            if (TrackCatalog.FUTURE_ERA.equals(track.era())) {
+                result.put(track.id(), new Entry(hash, size, track.file().toString(), track.category()));
+            } else {
+                result.put(track.id(), new Entry(hash, size, null, null));
+            }
+        }
+
+        for (String key : objects.keySet()) {
+            if (!key.startsWith(MUSIC_PREFIX) || !key.endsWith(OGG) || key.length() <= MUSIC_PREFIX.length() + OGG.length()) {
+                continue;
+            }
+            String rest = key.substring(MUSIC_PREFIX.length(), key.length() - OGG.length());
+            String id = rest.substring(rest.lastIndexOf('/') + 1);
+            ResourceLocation file = ResourceLocation.tryParse("minecraft:music/" + rest);
+            if (file == null || !TRACK_ID.matcher(id).matches() || result.containsKey(id) || TrackCatalog.get().byId(id).isPresent()) {
+                continue;
+            }
+            JsonObject object = objects.getAsJsonObject(key);
+            result.put(id, new Entry(object.get("hash").getAsString(), object.get("size").getAsLong(), file.toString(), categoryOf(rest)));
         }
         return result;
+    }
+
+    /** The category of a Mojang music file from its folder, where {@code rest} is the path under {@code music/}. */
+    private static String categoryOf(String rest) {
+        if (rest.startsWith("game/nether/")) {
+            return "nether";
+        }
+        if (rest.startsWith("game/end/")) {
+            return "end";
+        }
+        if (rest.startsWith("game/water/")) {
+            return "underwater";
+        }
+        if (rest.startsWith("game/creative/")) {
+            return "creative";
+        }
+        if (rest.startsWith("menu/")) {
+            return "menu";
+        }
+        return "overworld";
     }
 
     private static JsonObject getJson(String url) throws IOException, InterruptedException {
@@ -257,31 +392,57 @@ public final class RemoteTrackProvider {
         return HexFormat.of().formatHex(digest.digest());
     }
 
-    private static Map<String, Entry> loadCache(Path cacheFile) {
-        Map<String, Entry> cache = new ConcurrentHashMap<>();
-        if (!Files.isRegularFile(cacheFile)) {
-            return cache;
-        }
-        try {
-            JsonObject root = JsonParser.parseString(Files.readString(cacheFile)).getAsJsonObject();
-            for (Map.Entry<String, JsonElement> e : root.entrySet()) {
-                JsonObject o = e.getValue().getAsJsonObject();
-                cache.put(e.getKey(), new Entry(o.get("hash").getAsString(), o.get("size").getAsLong()));
-            }
-        } catch (Exception e) {
-            MusicUnbound.LOGGER.warn("Ignoring unreadable {}: {}", cacheFile, e.toString());
-            cache.clear();
-        }
-        return cache;
+    private static Path cacheFile() {
+        return FMLPaths.CONFIGDIR.get().resolve(MusicUnbound.MOD_ID).resolve("remote_tracks.json");
     }
 
-    private static void saveCache(Path cacheFile, Map<String, Entry> cache) {
+    private static synchronized Cache startupCache() {
+        if (startupCache == null) {
+            startupCache = loadCache(cacheFile());
+        }
+        return startupCache;
+    }
+
+    private static Cache loadCache(Path cacheFile) {
+        Map<String, Entry> entries = new LinkedHashMap<>();
+        long indexChecked = 0;
+        if (Files.isRegularFile(cacheFile)) {
+            try {
+                JsonObject root = JsonParser.parseString(Files.readString(cacheFile)).getAsJsonObject();
+                for (Map.Entry<String, JsonElement> e : root.entrySet()) {
+                    if (INDEX_CHECKED_KEY.equals(e.getKey())) {
+                        indexChecked = e.getValue().getAsLong();
+                        continue;
+                    }
+                    JsonObject o = e.getValue().getAsJsonObject();
+                    Entry entry = new Entry(o.get("hash").getAsString(), o.get("size").getAsLong(), optionalString(o, "file"), optionalString(o, "category"));
+                    if (entry.isDynamic() && ResourceLocation.tryParse(entry.file()) == null) {
+                        continue;
+                    }
+                    entries.put(e.getKey(), entry);
+                }
+            } catch (Exception e) {
+                MusicUnbound.LOGGER.warn("Ignoring unreadable {}: {}", cacheFile, e.toString());
+                entries.clear();
+                indexChecked = 0;
+            }
+        }
+        return new Cache(Collections.unmodifiableMap(entries), indexChecked);
+    }
+
+    private static void saveCache(Path cacheFile, Map<String, Entry> cache, long indexChecked) {
         try {
             JsonObject root = new JsonObject();
+            root.addProperty(INDEX_CHECKED_KEY, indexChecked);
             for (Map.Entry<String, Entry> e : cache.entrySet()) {
+                Entry entry = e.getValue();
                 JsonObject o = new JsonObject();
-                o.addProperty("hash", e.getValue().hash());
-                o.addProperty("size", e.getValue().size());
+                o.addProperty("hash", entry.hash());
+                o.addProperty("size", entry.size());
+                if (entry.isDynamic()) {
+                    o.addProperty("file", entry.file());
+                    o.addProperty("category", entry.category());
+                }
                 root.add(e.getKey(), o);
             }
             Files.createDirectories(cacheFile.getParent());
@@ -291,7 +452,22 @@ public final class RemoteTrackProvider {
         }
     }
 
-    /** One object of the asset index: SHA-1 hash and size in bytes. */
-    private record Entry(String hash, long size) {
+    @Nullable
+    private static String optionalString(JsonObject o, String key) {
+        return o.has(key) ? o.get(key).getAsString() : null;
+    }
+
+    /** The remote tracks file cache: entries by track id, and when the asset index was last read (epoch millis). */
+    private record Cache(Map<String, Entry> entries, long indexCheckedMillis) {
+    }
+
+    /**
+     * One object of the asset index: SHA-1 hash and size in bytes. Mojang tracks found by discovery also keep their
+     * sound file and category, so they can be rebuilt from the cache when the game starts offline.
+     */
+    private record Entry(String hash, long size, @Nullable String file, @Nullable String category) {
+        boolean isDynamic() {
+            return file != null && category != null;
+        }
     }
 }

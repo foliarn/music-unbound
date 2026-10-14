@@ -1,0 +1,123 @@
+# Music Unbound - publish workflow
+#
+# Runs when a tag matching v* is pushed, or manually from the Actions tab.
+# On tag pushes the tag (without the leading "v") must equal mod_version in
+# gradle.properties, otherwise the run fails before anything is built.
+#
+# One-time setup:
+#   1. Repository variable MODRINTH_PROJECT_ID: the Modrinth project ID.
+#      Settings > Secrets and variables > Actions > Variables.
+#      Leave it unset to publish to GitHub Releases only.
+#   2. Repository secret MODRINTH_TOKEN: a Modrinth personal access token with
+#      the "Create versions" scope.
+#      Settings > Secrets and variables > Actions > Secrets.
+#
+# Release:
+#   git tag v0.2.0 && git push --tags
+#   (Use `git tag -a v0.2.0 -m "notes"` to put release notes in the changelog.)
+
+name: Publish
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+
+      - name: Read mod version and verify tag
+        id: version
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          REF_NAME: ${{ github.ref_name }}
+        run: |
+          MOD_VERSION="$(sed -n 's/^mod_version[[:space:]]*=[[:space:]]*//p' gradle.properties | tr -d '\r[:space:]')"
+          if [ -z "$MOD_VERSION" ]; then
+            echo "::error file=gradle.properties::mod_version is missing from gradle.properties"
+            exit 1
+          fi
+          echo "mod_version=$MOD_VERSION" >> "$GITHUB_OUTPUT"
+          echo "Mod version from gradle.properties: $MOD_VERSION"
+
+          if [ "$EVENT_NAME" = "push" ]; then
+            TAG_VERSION="${REF_NAME#v}"
+            if [ "$TAG_VERSION" != "$MOD_VERSION" ]; then
+              echo "::error::Tag '$REF_NAME' does not match mod_version '$MOD_VERSION' in gradle.properties. Bump mod_version or use the matching tag (v$MOD_VERSION)."
+              exit 1
+            fi
+            echo "Tag $REF_NAME matches mod_version $MOD_VERSION."
+          else
+            echo "Manual run: skipping tag/version check."
+          fi
+
+      - name: Setup JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Build with Gradle
+        run: ./gradlew build
+
+      - name: Read changelog from tag annotation
+        id: changelog
+        env:
+          REF_TYPE: ${{ github.ref_type }}
+          REF_NAME: ${{ github.ref_name }}
+        run: |
+          NOTES=""
+          if [ "$REF_TYPE" = "tag" ] && [ "$(git for-each-ref --format='%(objecttype)' "refs/tags/$REF_NAME")" = "tag" ]; then
+            NOTES="$(git for-each-ref --format='%(contents)' "refs/tags/$REF_NAME")"
+          fi
+          if [ -z "$(printf '%s' "$NOTES" | tr -d '[:space:]')" ]; then
+            NOTES="See the commit history."
+          fi
+          {
+            echo "text<<CHANGELOG_EOF"
+            printf '%s\n' "$NOTES"
+            echo "CHANGELOG_EOF"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Publish to Modrinth
+        if: vars.MODRINTH_PROJECT_ID != ''
+        uses: Kir-Antipov/mc-publish@v3.3
+        with:
+          files: |
+            build/libs/musicunbound-*.jar
+          version: ${{ steps.version.outputs.mod_version }}
+          version-type: release
+          changelog: ${{ steps.changelog.outputs.text }}
+          loaders: neoforge
+          game-versions: 1.21.1
+          java: 21
+          modrinth-id: ${{ vars.MODRINTH_PROJECT_ID }}
+          modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
+
+      - name: Publish to GitHub Release
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: Kir-Antipov/mc-publish@v3.3
+        with:
+          files: |
+            build/libs/musicunbound-*.jar
+          version: ${{ steps.version.outputs.mod_version }}
+          version-type: release
+          changelog: ${{ steps.changelog.outputs.text }}
+          loaders: neoforge
+          game-versions: 1.21.1
+          java: 21
+          github-token: ${{ secrets.GITHUB_TOKEN }}

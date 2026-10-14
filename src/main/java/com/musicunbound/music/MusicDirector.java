@@ -20,15 +20,20 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.Music;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
+import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent;
+import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.client.event.SelectMusicEvent;
 import org.jetbrains.annotations.Nullable;
 
 /**
  * Decides which track plays and how long the wait is. Vanilla's MusicManager still does the timing and fading.
- * Registered on the NeoForge event bus; one instance holds the pending pick and the recent history.
+ * One shared instance ({@link #INSTANCE}) holds the pending pick, the forced track and the recent history.
  */
 public final class MusicDirector {
+    public static final MusicDirector INSTANCE = new MusicDirector();
+
     private static final int HISTORY_SIZE = 5;
+    private static final int FIRST_SONG_MAX_TICKS = 12000;
     private static final String END_TRACK_ID = "the_end";
     private static final String MINECRAFT = "minecraft";
 
@@ -36,6 +41,11 @@ public final class MusicDirector {
     private final Deque<String> history = new ArrayDeque<>();
     @Nullable
     private Track pending;
+    /** A track the player asked for (Playback.playNow). It plays until something else is playing. */
+    @Nullable
+    private Track forced;
+    /** Era-accurate first song: ticks left before any music may start after joining. */
+    private int holdTicks;
 
     private enum Context { MENU, CREDITS, BOSS, END, UNDERWATER, NETHER, DEEP_DARK, OVERWORLD }
 
@@ -71,6 +81,12 @@ public final class MusicDirector {
         suppressed = value;
     }
 
+    /** Makes {@code track} the playing song until something else plays, even if it is not in the pool. Null clears it. */
+    public void setForced(@Nullable Track track) {
+        forced = track;
+    }
+
+    /** Event handler for {@link SelectMusicEvent}. */
     public void onSelectMusic(SelectMusicEvent event) {
         if (suppressed) {
             event.setMusic(null);
@@ -80,50 +96,91 @@ public final class MusicDirector {
         if (event.getMusic() != event.getOriginalMusic()) {
             return;
         }
+        event.setMusic(decide(event.getOriginalMusic(), event.getPlayingMusic(), false));
+    }
+
+    /**
+     * The music to play now. Returns {@code original} when the mod leaves vanilla's choice alone, or null for silence.
+     * With {@code forceNewPick} the playing track is skipped and a fresh pick is made.
+     */
+    @Nullable
+    public Music decide(Music original, @Nullable SoundInstance playing, boolean forceNewPick) {
+        if (suppressed) {
+            return null;
+        }
         Preset preset = MusicConfig.PRESET.get();
         if (preset == Preset.VANILLA_1_21_1) {
-            return;
+            return original;
         }
 
-        Music original = event.getOriginalMusic();
-        ResourceLocation location = original.getEvent().value().getLocation();
+        Track playingTrack = trackOf(playing);
+        if (forced != null && (playingTrack == null || !playingTrack.id().equals(forced.id()))) {
+            forced = null;
+        }
+
         Minecraft minecraft = Minecraft.getInstance();
+        ResourceLocation location = original.getEvent().value().getLocation();
         boolean inNether = minecraft.level != null && minecraft.level.dimension() == Level.NETHER;
         Context context = classify(location, inNether);
         if (context == null || context == Context.CREDITS || context == Context.BOSS) {
-            return;
+            if (forced != null && !forceNewPick) {
+                return new Music(forced.sound(), original.getMinDelay(), original.getMaxDelay(), false);
+            }
+            return original;
         }
 
         LocalPlayer player = minecraft.player;
         boolean creative = player != null && player.getAbilities().instabuild;
         String timingKey = timingKey(context, creative);
 
+        if (forced != null && !forceNewPick) {
+            int[] delays = rotationDelays(context, preset, timingKey);
+            return new Music(forced.sound(), delays[0], delays[1], false);
+        }
+        if (holdTicks > 0) {
+            return null;
+        }
+
+        // When skipping, the playing track is the one to avoid. Playback.next() passes null, so fall back to Playback.
+        Track avoid = forceNewPick ? (playingTrack != null ? playingTrack : Playback.current()) : playingTrack;
         if (preset == Preset.VANILLA_LATEST) {
-            selectVanillaLatest(event, original, location, context, timingKey);
+            return selectVanillaLatest(original, location, context, timingKey, avoid, forceNewPick);
         } else if (context == Context.MENU) {
-            selectMenu(event, preset);
+            return selectMenu(preset, avoid, forceNewPick);
         } else if (keepsVanillaMusic(context)) {
             int[] delays = MusicConfig.FREQUENCY.get().delays(baseMin(context), baseMax(context), eraOf(preset), timingKey);
-            event.setMusic(new Music(original.getEvent(), delays[0], delays[1], original.replaceCurrentMusic()));
+            return new Music(original.getEvent(), delays[0], delays[1], original.replaceCurrentMusic());
         } else {
-            selectGame(event, preset, context, timingKey);
+            return selectGame(original, preset, context, timingKey, avoid, forceNewPick);
         }
     }
 
-    private void selectMenu(SelectMusicEvent event, Preset preset) {
+    /** Era-accurate first song: Alpha/Beta waited 0 to 10 minutes after joining before the first song. */
+    public void onLoggingIn(ClientPlayerNetworkEvent.LoggingIn event) {
+        boolean eraAlphaBeta = MusicConfig.PRESET.get() == Preset.ERA_ALPHA_BETA && MusicConfig.FREQUENCY.get() == Frequency.ERA;
+        holdTicks = eraAlphaBeta ? random.nextInt(FIRST_SONG_MAX_TICKS + 1) : 0;
+    }
+
+    public void onClientTick(ClientTickEvent.Post event) {
+        if (holdTicks > 0) {
+            holdTicks--;
+        }
+    }
+
+    @Nullable
+    private Music selectMenu(Preset preset, @Nullable Track playing, boolean forceNewPick) {
         Pool pool = new Pool();
         for (String id : preset.menuTracks()) {
             addAvailable(pool, id, 1);
         }
         if (pool.isEmpty()) {
             // Silent title screen (for example the Alpha & Beta preset).
-            event.setMusic(null);
-            return;
+            return null;
         }
-        choose(event, pool, 20, 600, true);
+        return choose(pool, 20, 600, true, playing, forceNewPick);
     }
 
-    private void selectGame(SelectMusicEvent event, Preset preset, Context context, String timingKey) {
+    private Music selectGame(Music original, Preset preset, Context context, String timingKey, @Nullable Track playing, boolean forceNewPick) {
         Pool pool = new Pool();
         for (String id : preset.gameTracks()) {
             TrackCatalog.get().byId(id).filter(t -> t.gameAllowed() && TrackAvailability.isAvailable(t)).ifPresent(t -> pool.add(t, 1));
@@ -134,23 +191,23 @@ public final class MusicDirector {
             TrackCatalog.get().byId(END_TRACK_ID).ifPresent(t -> pool.add(t, 1));
         }
         if (pool.isEmpty()) {
-            return;
+            return original;
         }
         int[] delays = MusicConfig.FREQUENCY.get().delays(baseMin(context), baseMax(context), eraOf(preset), timingKey);
-        choose(event, pool, delays[0], delays[1], isEnd);
+        return choose(pool, delays[0], delays[1], isEnd, playing, forceNewPick);
     }
 
-    private void selectVanillaLatest(SelectMusicEvent event, Music original, ResourceLocation location, Context context, String timingKey) {
+    private Music selectVanillaLatest(Music original, ResourceLocation location, Context context, String timingKey, @Nullable Track playing, boolean forceNewPick) {
         List<TrackCatalog.WeightedId> entries = TrackCatalog.get().vanillaLatest(location);
         if (entries == null) {
-            return;
+            return original;
         }
         Pool pool = new Pool();
         for (TrackCatalog.WeightedId entry : entries) {
             addAvailable(pool, entry.id(), entry.weight());
         }
         if (pool.isEmpty()) {
-            return;
+            return original;
         }
         int min = original.getMinDelay();
         int max = original.getMaxDelay();
@@ -159,39 +216,41 @@ public final class MusicDirector {
             min = delays[0];
             max = delays[1];
         }
-        choose(event, pool, min, max, original.replaceCurrentMusic());
+        return choose(pool, min, max, original.replaceCurrentMusic(), playing, forceNewPick);
     }
 
     /**
      * Keeps the pending pick stable: while the playing track is in the pool, keep playing it; otherwise pick
-     * one next track and keep returning it until it starts.
+     * one next track and keep returning it until it starts. With {@code forceNewPick}, {@code playing} is the
+     * track to avoid and a new pick is always made.
      */
-    private void choose(SelectMusicEvent event, Pool pool, int minDelay, int maxDelay, boolean replace) {
-        Track playing = trackOf(event.getPlayingMusic());
-        if (playing != null && pool.contains(playing.id())) {
+    private Music choose(Pool pool, int minDelay, int maxDelay, boolean replace, @Nullable Track playing, boolean forceNewPick) {
+        if (!forceNewPick && playing != null && pool.contains(playing.id())) {
             if (pending != null && pending.id().equals(playing.id())) {
                 remember(pending);
                 pending = null;
             }
             // Same track as the one already playing: never ask for a replace, so vanilla does not cut it.
-            event.setMusic(new Music(playing.sound(), minDelay, maxDelay, false));
-            return;
+            return new Music(playing.sound(), minDelay, maxDelay, false);
         }
 
-        if (pending == null || !pool.contains(pending.id())) {
-            pending = pickNext(pool);
+        if (forceNewPick || pending == null || !pool.contains(pending.id())) {
+            pending = pickNext(pool, forceNewPick ? playing : null);
             MusicUnbound.LOGGER.debug("Next background track: {}", pending.id());
         }
-        event.setMusic(new Music(pending.sound(), minDelay, maxDelay, replace));
+        return new Music(pending.sound(), minDelay, maxDelay, replace);
     }
 
-    private Track pickNext(Pool pool) {
+    private Track pickNext(Pool pool, @Nullable Track avoid) {
         // Avoid the most recent tracks, but never more than half the pool.
         int skip = Math.min(HISTORY_SIZE, pool.entries.size() / 2);
         Set<String> recent = new HashSet<>();
         Iterator<String> it = history.iterator();
         for (int i = 0; i < skip && it.hasNext(); i++) {
             recent.add(it.next());
+        }
+        if (avoid != null) {
+            recent.add(avoid.id());
         }
 
         int total = 0;
@@ -234,7 +293,8 @@ public final class MusicDirector {
         if (sound == null) {
             return null;
         }
-        return TrackCatalog.get().byFile(sound.getLocation()).orElse(null);
+        // Mod music tracks are matched by their sound event, vanilla and remote tracks by their file.
+        return TrackCatalog.get().byFile(sound.getLocation()).or(() -> TrackCatalog.get().byEvent(playing.getLocation())).orElse(null);
     }
 
     private static void addAvailable(Pool pool, String id, int weight) {
@@ -280,6 +340,14 @@ public final class MusicDirector {
             case UNDERWATER -> MusicConfig.UNDERWATER_KEEPS_MUSIC.get();
             default -> false;
         };
+    }
+
+    /** Gaps a track picked by the player gets, so it follows the same timing as the rotation would. */
+    private static int[] rotationDelays(Context context, Preset preset, String timingKey) {
+        if (context == Context.MENU) {
+            return new int[]{20, 600};
+        }
+        return MusicConfig.FREQUENCY.get().delays(baseMin(context), baseMax(context), eraOf(preset), timingKey);
     }
 
     private static String timingKey(Context context, boolean creative) {
