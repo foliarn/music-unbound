@@ -188,3 +188,32 @@ Postponed: the plan is to use the mod for a while first and decide afterwards. F
 
 ### Rejected: fixed event → song mapping (archived)
 Arrive in Overworld → Home, Minecraft, Sweden… · Sunrise → Featherfall, Left to Bloom… · Nightfall → Nightly, Fireflies… · Thunderstorm → Haunt Muskie, Taswell… · Trial Chambers → Watcher, Puzzlebox… · Stronghold → Concrete Halls… · Bastion → Chrysopoeia… · Village → A Familiar Room, Home…
+
+---
+
+## 9. v0.2 — from your first in-game review
+
+| Your feedback | Decision |
+|---|---|
+| Too many clicks to reach a preset | **Playlist picker screen** (vanilla list like *Language…*) with sections: Built-in · Versions · Your playlists. Two clicks to reach any playlist |
+| ▶ then leaving Tracks starts a new song | ▶ becomes **Play now**: the song becomes the real background track and keeps playing |
+| Menu too messy, labels too long | Short main screen + vanilla-style sub-screens: **Playlist ▸**, **Frequency**, **Places ▸**, **Display & extras ▸**. The custom sliders only show for *Custom* |
+| Toast shows "!" and lacks "Now Playing" | Music disc icon, yellow **Now Playing**, then *Title — Artist* (like 1.21.6) |
+| Want a player | **Pause menu player**: title, progress bar with mm:ss / mm:ss, ⏮ ⏯ ⏭. Keybinds for skip / previous / pause (unbound by default) |
+| Several playlists | **User playlists**: New / Duplicate / Rename / Delete, saved in `config/musicunbound/playlists.json`. Built-ins are read-only, with "Duplicate to edit". Vanilla widgets only, no extra libraries |
+
+Also in v0.2 (your "yes to all"):
+- jukebox fade
+- smooth fades
+- era-accurate first song
+- favourites ★ (2× more likely)
+- search box
+- current-track highlight + tooltips (album, version, length)
+- auto-detect future Mojang tracks
+- modded biome music (opt-in, "Other mods" group)
+- events (start a song early if silent: dimension, sunrise/nightfall, thunderstorm; shared cooldown)
+- auto-publish CI (tag → GitHub Release + Modrinth)
+
+**Build order:**
+- **Phase 1 (internals, in parallel):** playback controller · fades · playlists storage · dynamic catalog · CI.
+- **Phase 2 (screens):** settings + playlist picker/editor · pause player + toast + keybinds.
