@@ -5,6 +5,8 @@ import com.musicunbound.config.MusicConfig;
 import com.musicunbound.data.Era;
 import com.musicunbound.data.Track;
 import com.musicunbound.data.TrackCatalog;
+import com.musicunbound.playlist.Playlist;
+import com.musicunbound.playlist.PlaylistStore;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
@@ -108,8 +110,8 @@ public final class MusicDirector {
         if (suppressed) {
             return null;
         }
-        Preset preset = MusicConfig.PRESET.get();
-        if (preset == Preset.VANILLA_1_21_1) {
+        Playlist playlist = PlaylistStore.active();
+        if (playlist.kind() == Playlist.Kind.VANILLA_1_21_1) {
             return original;
         }
 
@@ -134,7 +136,7 @@ public final class MusicDirector {
         String timingKey = timingKey(context, creative);
 
         if (forced != null && !forceNewPick) {
-            int[] delays = rotationDelays(context, preset, timingKey);
+            int[] delays = rotationDelays(context, playlist, timingKey);
             return new Music(forced.sound(), delays[0], delays[1], false);
         }
         if (holdTicks > 0) {
@@ -143,21 +145,21 @@ public final class MusicDirector {
 
         // When skipping, the playing track is the one to avoid. Playback.next() passes null, so fall back to Playback.
         Track avoid = forceNewPick ? (playingTrack != null ? playingTrack : Playback.current()) : playingTrack;
-        if (preset == Preset.VANILLA_LATEST) {
+        if (playlist.kind() == Playlist.Kind.VANILLA_LATEST) {
             return selectVanillaLatest(original, location, context, timingKey, avoid, forceNewPick);
         } else if (context == Context.MENU) {
-            return selectMenu(preset, avoid, forceNewPick);
+            return selectMenu(playlist, avoid, forceNewPick);
         } else if (keepsVanillaMusic(context)) {
-            int[] delays = MusicConfig.FREQUENCY.get().delays(baseMin(context), baseMax(context), eraOf(preset), timingKey);
+            int[] delays = MusicConfig.FREQUENCY.get().delays(baseMin(context), baseMax(context), eraOf(playlist), timingKey);
             return new Music(original.getEvent(), delays[0], delays[1], original.replaceCurrentMusic());
         } else {
-            return selectGame(original, preset, context, timingKey, avoid, forceNewPick);
+            return selectGame(original, playlist, context, timingKey, avoid, forceNewPick);
         }
     }
 
     /** Era-accurate first song: Alpha/Beta waited 0 to 10 minutes after joining before the first song. */
     public void onLoggingIn(ClientPlayerNetworkEvent.LoggingIn event) {
-        boolean eraAlphaBeta = MusicConfig.PRESET.get() == Preset.ERA_ALPHA_BETA && MusicConfig.FREQUENCY.get() == Frequency.ERA;
+        boolean eraAlphaBeta = "alpha_beta".equals(PlaylistStore.active().eraId()) && MusicConfig.FREQUENCY.get() == Frequency.ERA;
         holdTicks = eraAlphaBeta ? random.nextInt(FIRST_SONG_MAX_TICKS + 1) : 0;
     }
 
@@ -168,10 +170,10 @@ public final class MusicDirector {
     }
 
     @Nullable
-    private Music selectMenu(Preset preset, @Nullable Track playing, boolean forceNewPick) {
+    private Music selectMenu(Playlist playlist, @Nullable Track playing, boolean forceNewPick) {
         Pool pool = new Pool();
-        for (String id : preset.menuTracks()) {
-            addAvailable(pool, id, 1);
+        for (String id : playlist.menu()) {
+            addAvailable(pool, id, weightOf(id));
         }
         if (pool.isEmpty()) {
             // Silent title screen (for example the Alpha & Beta preset).
@@ -180,10 +182,10 @@ public final class MusicDirector {
         return choose(pool, 20, 600, true, playing, forceNewPick);
     }
 
-    private Music selectGame(Music original, Preset preset, Context context, String timingKey, @Nullable Track playing, boolean forceNewPick) {
+    private Music selectGame(Music original, Playlist playlist, Context context, String timingKey, @Nullable Track playing, boolean forceNewPick) {
         Pool pool = new Pool();
-        for (String id : preset.gameTracks()) {
-            TrackCatalog.get().byId(id).filter(t -> t.gameAllowed() && TrackAvailability.isAvailable(t)).ifPresent(t -> pool.add(t, 1));
+        for (String id : playlist.game()) {
+            TrackCatalog.get().byId(id).filter(t -> t.gameAllowed() && TrackAvailability.isAvailable(t)).ifPresent(t -> pool.add(t, weightOf(t.id())));
         }
         boolean isEnd = context == Context.END;
         if (isEnd) {
@@ -193,7 +195,7 @@ public final class MusicDirector {
         if (pool.isEmpty()) {
             return original;
         }
-        int[] delays = MusicConfig.FREQUENCY.get().delays(baseMin(context), baseMax(context), eraOf(preset), timingKey);
+        int[] delays = MusicConfig.FREQUENCY.get().delays(baseMin(context), baseMax(context), eraOf(playlist), timingKey);
         return choose(pool, delays[0], delays[1], isEnd, playing, forceNewPick);
     }
 
@@ -297,6 +299,11 @@ public final class MusicDirector {
         return TrackCatalog.get().byFile(sound.getLocation()).or(() -> TrackCatalog.get().byEvent(playing.getLocation())).orElse(null);
     }
 
+    /** Favourite tracks are twice as likely to be picked. */
+    private static int weightOf(String id) {
+        return PlaylistStore.isFavourite(id) ? 2 : 1;
+    }
+
     private static void addAvailable(Pool pool, String id, int weight) {
         TrackCatalog.get().byId(id).filter(TrackAvailability::isAvailable).ifPresent(t -> pool.add(t, weight));
     }
@@ -343,11 +350,11 @@ public final class MusicDirector {
     }
 
     /** Gaps a track picked by the player gets, so it follows the same timing as the rotation would. */
-    private static int[] rotationDelays(Context context, Preset preset, String timingKey) {
+    private static int[] rotationDelays(Context context, Playlist playlist, String timingKey) {
         if (context == Context.MENU) {
             return new int[]{20, 600};
         }
-        return MusicConfig.FREQUENCY.get().delays(baseMin(context), baseMax(context), eraOf(preset), timingKey);
+        return MusicConfig.FREQUENCY.get().delays(baseMin(context), baseMax(context), eraOf(playlist), timingKey);
     }
 
     private static String timingKey(Context context, boolean creative) {
@@ -368,7 +375,7 @@ public final class MusicDirector {
     }
 
     @Nullable
-    private static Era eraOf(Preset preset) {
-        return preset.eraId() == null ? null : TrackCatalog.get().era(preset.eraId());
+    private static Era eraOf(Playlist playlist) {
+        return playlist.eraId() == null ? null : TrackCatalog.get().era(playlist.eraId());
     }
 }

@@ -2,7 +2,6 @@
   "musicunbound.screen.settings": "Music Unbound",
   "musicunbound.screen.tracks": "Tracks",
   "musicunbound.options.open": "Music Unbound...",
-
   "musicunbound.option.preset": "Preset",
   "musicunbound.option.frequency": "Frequency",
   "musicunbound.option.customMin": "Custom min",
@@ -10,24 +9,19 @@
   "musicunbound.value.minutes": "%s min",
   "musicunbound.value.own": "Own",
   "musicunbound.value.shared": "Shared",
-
   "musicunbound.option.netherKeepsMusic": "Nether music",
   "musicunbound.option.endKeepsMusic": "End music",
   "musicunbound.option.deepDarkKeepsMusic": "Deep Dark music",
   "musicunbound.option.underwaterKeepsMusic": "Underwater music",
-
   "musicunbound.tooltip.netherKeepsMusic": "Own: the Nether keeps its vanilla music. Shared: your playlist plays here too.",
   "musicunbound.tooltip.endKeepsMusic": "Own: the End keeps its vanilla music. Shared: your playlist plays here too.",
   "musicunbound.tooltip.deepDarkKeepsMusic": "Own: the Deep Dark keeps its vanilla music. Shared: your playlist plays here too.",
   "musicunbound.tooltip.underwaterKeepsMusic": "Own: underwater keeps its vanilla music. Shared: your playlist plays here too.",
-
   "musicunbound.option.showToast": "Now Playing toast",
   "musicunbound.option.playWhilePaused": "Play while paused",
   "musicunbound.option.showInPauseMenu": "Pause menu track",
   "musicunbound.option.downloadNewTracks": "Download new tracks",
-
   "musicunbound.option.tracks": "Tracks...",
-
   "musicunbound.tracks.game": "Game",
   "musicunbound.tracks.menu": "Menu",
   "musicunbound.tracks.gameAll": "Game: all",
@@ -36,5 +30,11 @@
   "musicunbound.tracks.menuNone": "Menu: none",
   "musicunbound.tracks.track": "%s — %s",
   "musicunbound.tracks.notDownloaded": " (not downloaded)",
-  "musicunbound.tracks.reset": "Reset to preset"
+  "musicunbound.tracks.reset": "Reset to preset",
+  "key.categories.musicunbound": "Music Unbound",
+  "key.musicunbound.next": "Next track",
+  "key.musicunbound.previous": "Previous track",
+  "key.musicunbound.pause": "Pause / resume music",
+  "musicunbound.toast.nowPlaying": "Now Playing",
+  "musicunbound.player.nothing": "Nothing playing"
 }
