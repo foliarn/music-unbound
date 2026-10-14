@@ -10,6 +10,7 @@ import net.minecraft.sounds.SoundEvent;
 
 /**
  * One background track. {@code file} is the vanilla sound file (for example {@code minecraft:music/game/aerie}).
+ * {@code length} is the duration in seconds, or 0 when unknown.
  */
 public record Track(
         String id,
@@ -22,7 +23,8 @@ public record Track(
         boolean gameDefault,
         boolean gameAllowed,
         boolean menuAll,
-        Set<String> menuEras) {
+        Set<String> menuEras,
+        int length) {
 
     private static final Map<String, Holder<SoundEvent>> SOUNDS = new ConcurrentHashMap<>();
 

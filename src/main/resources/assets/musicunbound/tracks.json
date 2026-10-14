@@ -283,7 +283,8 @@
    "gameDefault": true,
    "gameAllowed": true,
    "menuAll": false,
-   "menuEras": []
+   "menuEras": [],
+   "length": 261
   },
   {
    "id": "clark",
@@ -296,7 +297,8 @@
    "gameDefault": true,
    "gameAllowed": true,
    "menuAll": false,
-   "menuEras": []
+   "menuEras": [],
+   "length": 202
   },
   {
    "id": "sweden",
@@ -309,7 +311,8 @@
    "gameDefault": true,
    "gameAllowed": true,
    "menuAll": false,
-   "menuEras": []
+   "menuEras": [],
+   "length": 230
   },
   {
    "id": "dry_hands",
@@ -322,7 +325,8 @@
    "gameDefault": true,
    "gameAllowed": true,
    "menuAll": false,
-   "menuEras": []
+   "menuEras": [],
+   "length": 68
   },
   {
    "id": "wet_hands",
@@ -335,7 +339,8 @@
    "gameDefault": true,
    "gameAllowed": true,
    "menuAll": false,
-   "menuEras": []
+   "menuEras": [],
+   "length": 90
   },
   {
    "id": "mice_on_venus",
@@ -348,7 +353,8 @@
    "gameDefault": true,
    "gameAllowed": true,
    "menuAll": false,
-   "menuEras": []
+   "menuEras": [],
+   "length": 281
   },
   {
    "id": "subwoofer_lullaby",
@@ -361,7 +367,8 @@
    "gameDefault": true,
    "gameAllowed": true,
    "menuAll": false,
-   "menuEras": []
+   "menuEras": [],
+   "length": 209
   },
   {
    "id": "living_mice",
@@ -374,7 +381,8 @@
    "gameDefault": true,
    "gameAllowed": true,
    "menuAll": false,
-   "menuEras": []
+   "menuEras": [],
+   "length": 188
   },
   {
    "id": "haggstrom",
@@ -387,7 +395,8 @@
    "gameDefault": true,
    "gameAllowed": true,
    "menuAll": false,
-   "menuEras": []
+   "menuEras": [],
+   "length": 191
   },
   {
    "id": "danny",
@@ -400,7 +409,8 @@
    "gameDefault": true,
    "gameAllowed": true,
    "menuAll": false,
-   "menuEras": []
+   "menuEras": [],
+   "length": 255
   },
   {
    "id": "key",
@@ -413,7 +423,8 @@
    "gameDefault": true,
    "gameAllowed": true,
    "menuAll": false,
-   "menuEras": []
+   "menuEras": [],
+   "length": 61
   },
   {
    "id": "oxygene",
@@ -426,7 +437,8 @@
    "gameDefault": true,
    "gameAllowed": true,
    "menuAll": false,
-   "menuEras": []
+   "menuEras": [],
+   "length": 70
   },
   {
    "id": "mutation",
@@ -449,7 +461,8 @@
     "tricky_trials",
     "chase_the_skies",
     "chaos_cubed"
-   ]
+   ],
+   "length": 195
   },
   {
    "id": "moog_city_2",
@@ -472,7 +485,8 @@
     "tricky_trials",
     "chase_the_skies",
     "chaos_cubed"
-   ]
+   ],
+   "length": 184
   },
   {
    "id": "beginning_2",
@@ -495,7 +509,8 @@
     "tricky_trials",
     "chase_the_skies",
     "chaos_cubed"
-   ]
+   ],
+   "length": 183
   },
   {
    "id": "floating_trees",
@@ -518,7 +533,8 @@
     "tricky_trials",
     "chase_the_skies",
     "chaos_cubed"
-   ]
+   ],
+   "length": 245
   },
   {
    "id": "biome_fest",
@@ -531,7 +547,8 @@
    "gameDefault": true,
    "gameAllowed": true,
    "menuAll": false,
-   "menuEras": []
+   "menuEras": [],
+   "length": 383
   },
   {
    "id": "blind_spots",
@@ -544,7 +561,8 @@
    "gameDefault": true,
    "gameAllowed": true,
    "menuAll": false,
-   "menuEras": []
+   "menuEras": [],
+   "length": 332
   },
   {
    "id": "haunt_muskie",
@@ -557,7 +575,8 @@
    "gameDefault": true,
    "gameAllowed": true,
    "menuAll": false,
-   "menuEras": []
+   "menuEras": [],
+   "length": 362
   },
   {
    "id": "aria_math",
@@ -570,7 +589,8 @@
    "gameDefault": true,
    "gameAllowed": true,
    "menuAll": false,
-   "menuEras": []
+   "menuEras": [],
+   "length": 310
   },
   {
    "id": "dreiton",
@@ -583,7 +603,8 @@
    "gameDefault": true,
    "gameAllowed": true,
    "menuAll": false,
-   "menuEras": []
+   "menuEras": [],
+   "length": 497
   },
   {
    "id": "taswell",
@@ -596,7 +617,8 @@
    "gameDefault": true,
    "gameAllowed": true,
    "menuAll": false,
-   "menuEras": []
+   "menuEras": [],
+   "length": 515
   },
   {
    "id": "concrete_halls",
@@ -609,7 +631,8 @@
    "gameDefault": false,
    "gameAllowed": true,
    "menuAll": false,
-   "menuEras": []
+   "menuEras": [],
+   "length": 259
   },
   {
    "id": "dead_voxel",
@@ -622,7 +645,8 @@
    "gameDefault": false,
    "gameAllowed": true,
    "menuAll": false,
-   "menuEras": []
+   "menuEras": [],
+   "length": 304
   },
   {
    "id": "warmth",
@@ -635,7 +659,8 @@
    "gameDefault": false,
    "gameAllowed": true,
    "menuAll": false,
-   "menuEras": []
+   "menuEras": [],
+   "length": 239
   },
   {
    "id": "ballad_of_the_cats",
@@ -648,7 +673,8 @@
    "gameDefault": false,
    "gameAllowed": true,
    "menuAll": false,
-   "menuEras": []
+   "menuEras": [],
+   "length": 280
   },
   {
    "id": "the_end",
@@ -661,7 +687,8 @@
    "gameDefault": false,
    "gameAllowed": false,
    "menuAll": false,
-   "menuEras": []
+   "menuEras": [],
+   "length": 905
   },
   {
    "id": "boss",
@@ -674,7 +701,8 @@
    "gameDefault": true,
    "gameAllowed": true,
    "menuAll": false,
-   "menuEras": []
+   "menuEras": [],
+   "length": 344
   },
   {
    "id": "alpha",
@@ -687,7 +715,8 @@
    "gameDefault": true,
    "gameAllowed": true,
    "menuAll": false,
-   "menuEras": []
+   "menuEras": [],
+   "length": 603
   },
   {
    "id": "axolotl",
@@ -700,7 +729,8 @@
    "gameDefault": true,
    "gameAllowed": true,
    "menuAll": false,
-   "menuEras": []
+   "menuEras": [],
+   "length": 303
   },
   {
    "id": "dragon_fish",
@@ -713,7 +743,8 @@
    "gameDefault": true,
    "gameAllowed": true,
    "menuAll": false,
-   "menuEras": []
+   "menuEras": [],
+   "length": 372
   },
   {
    "id": "shuniji",
@@ -726,7 +757,8 @@
    "gameDefault": true,
    "gameAllowed": true,
    "menuAll": false,
-   "menuEras": []
+   "menuEras": [],
+   "length": 244
   },
   {
    "id": "rubedo",
@@ -739,7 +771,8 @@
    "gameDefault": false,
    "gameAllowed": true,
    "menuAll": false,
-   "menuEras": []
+   "menuEras": [],
+   "length": 312
   },
   {
    "id": "chrysopoeia",
@@ -752,7 +785,8 @@
    "gameDefault": false,
    "gameAllowed": true,
    "menuAll": false,
-   "menuEras": []
+   "menuEras": [],
+   "length": 303
   },
   {
    "id": "so_below",
@@ -765,7 +799,8 @@
    "gameDefault": false,
    "gameAllowed": true,
    "menuAll": false,
-   "menuEras": []
+   "menuEras": [],
+   "length": 319
   },
   {
    "id": "stand_tall",
@@ -780,7 +815,8 @@
    "menuAll": false,
    "menuEras": [
     "caves_cliffs"
-   ]
+   ],
+   "length": 308
   },
   {
    "id": "left_to_bloom",
@@ -795,7 +831,8 @@
    "menuAll": false,
    "menuEras": [
     "caves_cliffs"
-   ]
+   ],
+   "length": 343
   },
   {
    "id": "wending",
@@ -810,7 +847,8 @@
    "menuAll": false,
    "menuEras": [
     "caves_cliffs"
-   ]
+   ],
+   "length": 315
   },
   {
    "id": "infinite_amethyst",
@@ -825,7 +863,8 @@
    "menuAll": false,
    "menuEras": [
     "caves_cliffs"
-   ]
+   ],
+   "length": 272
   },
   {
    "id": "one_more_day",
@@ -840,7 +879,8 @@
    "menuAll": false,
    "menuEras": [
     "caves_cliffs"
-   ]
+   ],
+   "length": 279
   },
   {
    "id": "floating_dream",
@@ -855,7 +895,8 @@
    "menuAll": false,
    "menuEras": [
     "caves_cliffs"
-   ]
+   ],
+   "length": 205
   },
   {
    "id": "comforting_memories",
@@ -870,7 +911,8 @@
    "menuAll": false,
    "menuEras": [
     "caves_cliffs"
-   ]
+   ],
+   "length": 275
   },
   {
    "id": "an_ordinary_day",
@@ -885,7 +927,8 @@
    "menuAll": false,
    "menuEras": [
     "caves_cliffs"
-   ]
+   ],
+   "length": 331
   },
   {
    "id": "ancestry",
@@ -898,7 +941,8 @@
    "gameDefault": false,
    "gameAllowed": true,
    "menuAll": false,
-   "menuEras": []
+   "menuEras": [],
+   "length": 344
   },
   {
    "id": "aerie",
@@ -913,7 +957,8 @@
    "menuAll": false,
    "menuEras": [
     "wild"
-   ]
+   ],
+   "length": 297
   },
   {
    "id": "firebugs",
@@ -928,7 +973,8 @@
    "menuAll": false,
    "menuEras": [
     "wild"
-   ]
+   ],
+   "length": 313
   },
   {
    "id": "labyrinthine",
@@ -943,7 +989,8 @@
    "menuAll": false,
    "menuEras": [
     "wild"
-   ]
+   ],
+   "length": 325
   },
   {
    "id": "echo_in_the_wind",
@@ -958,7 +1005,8 @@
    "menuAll": false,
    "menuEras": [
     "trails_tales"
-   ]
+   ],
+   "length": 296
   },
   {
    "id": "a_familiar_room",
@@ -973,7 +1021,8 @@
    "menuAll": false,
    "menuEras": [
     "trails_tales"
-   ]
+   ],
+   "length": 241
   },
   {
    "id": "bromeliad",
@@ -988,7 +1037,8 @@
    "menuAll": false,
    "menuEras": [
     "trails_tales"
-   ]
+   ],
+   "length": 312
   },
   {
    "id": "crescent_dunes",
@@ -1003,7 +1053,8 @@
    "menuAll": false,
    "menuEras": [
     "trails_tales"
-   ]
+   ],
+   "length": 248
   },
   {
    "id": "featherfall",
@@ -1018,7 +1069,8 @@
    "menuAll": true,
    "menuEras": [
     "tricky_trials"
-   ]
+   ],
+   "length": 344
   },
   {
    "id": "watcher",
@@ -1033,7 +1085,8 @@
    "menuAll": true,
    "menuEras": [
     "tricky_trials"
-   ]
+   ],
+   "length": 332
   },
   {
    "id": "puzzlebox",
@@ -1048,7 +1101,8 @@
    "menuAll": true,
    "menuEras": [
     "tricky_trials"
-   ]
+   ],
+   "length": 300
   },
   {
    "id": "komorebi",
@@ -1063,7 +1117,8 @@
    "menuAll": true,
    "menuEras": [
     "tricky_trials"
-   ]
+   ],
+   "length": 288
   },
   {
    "id": "pokopoko",
@@ -1078,7 +1133,8 @@
    "menuAll": true,
    "menuEras": [
     "tricky_trials"
-   ]
+   ],
+   "length": 305
   },
   {
    "id": "yakusoku",
@@ -1093,7 +1149,8 @@
    "menuAll": true,
    "menuEras": [
     "tricky_trials"
-   ]
+   ],
+   "length": 271
   },
   {
    "id": "deeper",
@@ -1108,7 +1165,8 @@
    "menuAll": true,
    "menuEras": [
     "tricky_trials"
-   ]
+   ],
+   "length": 303
   },
   {
    "id": "eld_unknown",
@@ -1123,7 +1181,8 @@
    "menuAll": true,
    "menuEras": [
     "tricky_trials"
-   ]
+   ],
+   "length": 297
   },
   {
    "id": "endless",
@@ -1138,7 +1197,8 @@
    "menuAll": true,
    "menuEras": [
     "tricky_trials"
-   ]
+   ],
+   "length": 402
   },
   {
    "id": "below_and_above",
@@ -1153,7 +1213,8 @@
    "menuAll": false,
    "menuEras": [
     "chase_the_skies"
-   ]
+   ],
+   "length": 212
   },
   {
    "id": "broken_clocks",
@@ -1168,7 +1229,8 @@
    "menuAll": false,
    "menuEras": [
     "chase_the_skies"
-   ]
+   ],
+   "length": 214
   },
   {
    "id": "fireflies",
@@ -1183,7 +1245,8 @@
    "menuAll": false,
    "menuEras": [
     "chase_the_skies"
-   ]
+   ],
+   "length": 156
   },
   {
    "id": "lilypad",
@@ -1198,7 +1261,8 @@
    "menuAll": false,
    "menuEras": [
     "chase_the_skies"
-   ]
+   ],
+   "length": 236
   },
   {
    "id": "os_piano",
@@ -1213,7 +1277,8 @@
    "menuAll": false,
    "menuEras": [
     "chase_the_skies"
-   ]
+   ],
+   "length": 275
   },
   {
    "id": "ebb",
@@ -1228,7 +1293,8 @@
    "menuAll": true,
    "menuEras": [
     "chaos_cubed"
-   ]
+   ],
+   "length": 306
   },
   {
    "id": "home",
@@ -1243,7 +1309,8 @@
    "menuAll": true,
    "menuEras": [
     "chaos_cubed"
-   ]
+   ],
+   "length": 380
   },
   {
    "id": "memories",
@@ -1258,7 +1325,8 @@
    "menuAll": true,
    "menuEras": [
     "chaos_cubed"
-   ]
+   ],
+   "length": 245
   },
   {
    "id": "nightly",
@@ -1273,7 +1341,8 @@
    "menuAll": true,
    "menuEras": [
     "chaos_cubed"
-   ]
+   ],
+   "length": 302
   },
   {
    "id": "shores",
@@ -1288,7 +1357,8 @@
    "menuAll": true,
    "menuEras": [
     "chaos_cubed"
-   ]
+   ],
+   "length": 320
   }
  ],
  "vanillaLatest": {

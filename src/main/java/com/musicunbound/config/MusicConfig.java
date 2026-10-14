@@ -24,6 +24,14 @@ public final class MusicConfig {
     public static final ModConfigSpec.BooleanValue SHOW_IN_PAUSE_MENU;
     public static final ModConfigSpec.BooleanValue DOWNLOAD_NEW_TRACKS;
 
+    public static final ModConfigSpec.BooleanValue SMOOTH_FADES;
+    public static final ModConfigSpec.BooleanValue JUKEBOX_FADE;
+
+    public static final ModConfigSpec.BooleanValue EVENT_DIMENSION;
+    public static final ModConfigSpec.BooleanValue EVENT_TIME;
+    public static final ModConfigSpec.BooleanValue EVENT_WEATHER;
+    public static final ModConfigSpec.IntValue EVENT_COOLDOWN_MINUTES;
+
     public static final ModConfigSpec.ConfigValue<List<? extends String>> CUSTOM_GAME_TRACKS;
     public static final ModConfigSpec.ConfigValue<List<? extends String>> CUSTOM_MENU_TRACKS;
 
@@ -68,6 +76,26 @@ public final class MusicConfig {
                 .define("showInPauseMenu", true);
         DOWNLOAD_NEW_TRACKS = b.comment("Download the tracks added after 1.21.1 from Mojang's asset server.")
                 .define("downloadNewTracks", true);
+        b.pop();
+
+        b.comment("Playback smoothing.")
+                .push("playback");
+        SMOOTH_FADES = b.comment("Fade music out instead of cutting it (context changes, skipping).")
+                .define("smoothFades", true);
+        JUKEBOX_FADE = b.comment("Fade background music down while a jukebox can be heard.")
+                .define("jukeboxFade", true);
+        b.pop();
+
+        b.comment("Start a song right away (only if nothing is playing) when something happens.")
+                .push("events");
+        EVENT_DIMENSION = b.comment("When you arrive in another dimension.")
+                .define("dimension", true);
+        EVENT_TIME = b.comment("At sunrise and nightfall.")
+                .define("time", true);
+        EVENT_WEATHER = b.comment("When a thunderstorm starts.")
+                .define("weather", true);
+        EVENT_COOLDOWN_MINUTES = b.comment("Minimum minutes between two event songs.")
+                .defineInRange("cooldownMinutes", 10, 0, 60);
         b.pop();
 
         b.comment("Used only when preset is CUSTOM. Track ids from tracks.json, for example \"aerie\".")

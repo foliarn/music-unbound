@@ -34,3 +34,35 @@ Decompiled reference sources (Minecraft + NeoForge, read-only): see the path giv
 - No dependencies besides NeoForge. Use vanilla widgets only for UI.
 - Nothing heavy per frame. Per-tick work must be O(1)-ish.
 - Keep classes small and readable. Follow the existing code style. Comments only where the logic is not obvious.
+
+---
+
+# v0.2 additions (contract)
+
+## Phase 1: internals (parallel, each agent owns its files)
+
+| Owner | Files | Public API other code relies on |
+|---|---|---|
+| A1 Playback | `music/Playback.java`, `music/MusicDirector.java` (refactor), `client/NowPlaying.java` (tracking moves to Playback) | see "Playback API" |
+| A2 Audio | `audio/MusicFader.java`, `mixin/MusicManagerMixin.java` | `MusicFader.register()`, `MusicFader.fadeOutAndStop(SoundInstance)` |
+| B1 Playlists | `playlist/Playlist.java`, `playlist/PlaylistStore.java` | see "Playlist API" |
+| B2 Dynamic catalog | `data/TrackCatalog.java` (dynamic tracks), `remote/RemoteTrackProvider.java`, `data/ModdedMusic.java` | `TrackCatalog.tracks()` may grow at runtime (thread-safe) |
+| D CI | `.github/workflows/publish.yml` | — |
+
+Shared glue already in place (supervisor): `Track.length()` (seconds, 0 = unknown), config keys `SMOOTH_FADES`, `JUKEBOX_FADE`, `EVENT_*`, and the mixin accessors `SoundManagerAccessor` (→ SoundEngine) and `SoundEngineAccessor` (`instanceToChannel`, `instanceBySource`, `calculateVolume`).
+
+### Playback API (`com.musicunbound.music.Playback`, static, render thread)
+- `@Nullable Track current()`, `@Nullable SoundInstance currentInstance()`
+- `int elapsedSeconds()` (excludes paused time), `boolean isPaused()`
+- `void playNow(Track)`: becomes the real background song (not a preview). Keeps playing even if not in the pool.
+- `void next()`: skip to the next pick immediately. `void previous()`: replay the previously played track. `void togglePause()`.
+- `void startNextIfSilent()`: used by events. Starts the next pick now if nothing is playing.
+- `List<Track> history()`: most recent first.
+
+### Playlist API (`com.musicunbound.playlist`)
+- `record Playlist(String id, String name, Kind kind, @Nullable String eraId, Set<String> game, Set<String> menu)` with `enum Kind { NORMAL, VANILLA_1_21_1, VANILLA_LATEST }`, plus `boolean builtIn()` (`id` starts with `builtin:`).
+- `PlaylistStore` (static):
+  - Reading: `builtIns()`, `userPlaylists()`, `all()`, `active()`, `byId(id)`.
+  - Changing: `setActive(id)`, `create(name, @Nullable copyFromId)`, `rename(id, name)`, `delete(id)`, `setTracks(id, game, menu)`.
+  - Favourites: `isFavourite(trackId)`, `setFavourite(trackId, bool)`.
+  - Saved in `config/musicunbound/playlists.json`.

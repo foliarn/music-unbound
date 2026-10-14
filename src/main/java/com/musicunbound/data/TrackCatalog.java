@@ -142,7 +142,8 @@ public final class TrackCatalog {
                     o.get("gameDefault").getAsBoolean(),
                     o.get("gameAllowed").getAsBoolean(),
                     o.get("menuAll").getAsBoolean(),
-                    Set.copyOf(menuEras)));
+                    Set.copyOf(menuEras),
+                    o.has("length") ? o.get("length").getAsInt() : 0));
         }
         return tracks;
     }

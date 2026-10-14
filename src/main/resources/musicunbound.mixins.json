@@ -5,8 +5,11 @@
   "compatibilityLevel": "JAVA_21",
   "client": [
     "MinecraftMixin",
+    "MusicManagerMixin",
     "OptionsSubScreenAccessor",
-    "SoundEngineMixin"
+    "SoundEngineAccessor",
+    "SoundEngineMixin",
+    "SoundManagerAccessor"
   ],
   "injectors": {
     "defaultRequire": 1
